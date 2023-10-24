@@ -7,9 +7,10 @@ Building a Spring Boot application in Gitlab-CI or Jenkins
 ## Copy the git repo in your machine
 
 Create a directory and launch the following command lines in your new directory:  
-From ssh :
-
-From git cli :
+From ssh :  
+`git clone git@github.com:PaulineGB/datascientest-theme-park.git`  
+From https :  
+`git clone https://github.com/PaulineGB/datascientest-theme-park.git`
 
 ## Initialise the docker container
 
