@@ -18,7 +18,7 @@ From https :
 
 ## Check api routes
 
-GET http://localhost:5000/ride
-POST http://localhost:5000/ride
-GET http://localhost:5000/ride/{id}
+GET http://localhost:5000/ride  
+POST http://localhost:5000/ride  
+GET http://localhost:5000/ride/{id}  
 GET http://localhost:5000/actuator/health/
