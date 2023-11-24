@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://tpr-db.cx0riniaqwhm.eu-west-3.rds.amazonaws.com:3306/themepark
-    username: root
+    username: admin
     password: themepark
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
