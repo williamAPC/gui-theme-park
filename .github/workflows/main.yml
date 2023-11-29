@@ -8,27 +8,19 @@ jobs:
   build_test_release:
     runs-on: ubuntu-latest
     env:
-      DB_HOST: lab.farlo.ch
-      DB_PORT: 30306
-      DB_NAME: themepark
-      DB_USERNAME: admin
-      DB_PASSWORD: themepark
-    container: 
-      image: openjdk:12-alpine
+      DB-URL: jdbc:mysql://db:3306/themepark
+      DB-USERNAME: username
+      DB-PASSWORD: password
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: build
         run: |
-          chmod +x ./gradlew
+          ddocker run --name db -e MYSQL_RANDOM_ROOT_PASSWORD=yes -e MYSQL_DATABASE=themepark -e MYSQL_USER=username -e MYSQL_PASSWORD=password -p 3306:3306 mysql:8.0
+          sleep 5
           sed -i "s/CI_PIPELINE_IID/${{ github.run_id }}/" ./src/main/resources/application.yml
           sed -i "s/CI_COMMIT_SHORT_SHA/${{ github.sha }}/" ./src/main/resources/application.yml
           sed -i "s/CI_COMMIT_BRANCH/${{ github.ref_name }}/" ./src/main/resources/application.yml
-          sed -i "s/db_host/$DB_HOST/" ./src/main/resources/application.yml
-          sed -i "s/db_port/$DB_PORT/" ./src/main/resources/application.yml
-          sed -i "s/db_name/$DB_NAME/" ./src/main/resources/application.yml
-          sed -i "s/db_username/$DB_USERNAME/" ./src/main/resources/application.yml
-          sed -i "s/db_password/$DB_PASSWORD/" ./src/main/resources/application.yml
           cat ./src/main/resources/application.yml
           ./gradlew build
       - name: smoke test
