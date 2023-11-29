@@ -15,17 +15,17 @@ jobs:
           export DB_URL='jdbc:mysql://localhost:3306/themepark'
           export DB_USERNAME='username'
           export DB_PASSWORD='password'
-          #docker run -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes -e MYSQL_DATABASE=themepark -e MYSQL_USER=username -e MYSQL_PASSWORD=password -p 3306:3306 mysql:8.0
+          docker run -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes -e MYSQL_DATABASE=themepark -e MYSQL_USER=username -e MYSQL_PASSWORD=password -p 3306:3306 mysql:8.0
           sed -i "s/CI_PIPELINE_IID/${{ github.run_id }}/" ./src/main/resources/application.yml
           sed -i "s/CI_COMMIT_SHORT_SHA/${{ github.sha }}/" ./src/main/resources/application.yml
           sed -i "s/CI_COMMIT_BRANCH/${{ github.ref_name }}/" ./src/main/resources/application.yml
-          #./gradlew build --info
+          ./gradlew build --info
       - name: smoke test
         run: |
           export DB_URL='jdbc:mysql://localhost:3306/themepark'
           export DB_USERNAME='username'
           export DB_PASSWORD='password'
-          #java -jar ./build/libs/theme-park-ride-gradle.jar &
+          java -jar ./build/libs/theme-park-ride-gradle.jar &
           sleep 10
           curl http://localhost:5000/actuator/health | grep "UP"
       - name: unit test
