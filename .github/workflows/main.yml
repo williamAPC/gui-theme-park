@@ -1,18 +1,43 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: GitHub Actions Build
+run-name: ${{ github.actor }} is building  ${{ github.repository }} ${{ github.ref }} 🚀
 on: [push]
+env:
+  ARTIFACT_NAME: theme-park-ride-v${{ github.run_id }}.jar
+  APP_NAME: theme-park-ride
 jobs:
-  Explore-GitHub-Actions:
+  build_test_release:
     runs-on: ubuntu-latest
+    env:
+      DB_HOST: lab.farlo.ch
+      DB_PORT: 30306
+      DB_NAME: themepark
+      DB_USERNAME: admin
+      DB_PASSWORD: themepark
+    container: 
+      image: openjdk:12-alpine
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+      - name: build
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          chmod +x ./gradlew
+          sed -i "s/CI_PIPELINE_IID/${{ github.run_id }}/" ./src/main/resources/application.yml
+          sed -i "s/CI_COMMIT_SHORT_SHA/${{ github.sha }}/" ./src/main/resources/application.yml
+          sed -i "s/CI_COMMIT_BRANCH/${{ github.ref_name }}/" ./src/main/resources/application.yml
+          sed -i "s/db_host/$DB_HOST/" ./src/main/resources/application.yml
+          sed -i "s/db_port/$DB_PORT/" ./src/main/resources/application.yml
+          sed -i "s/db_name/$DB_NAME/" ./src/main/resources/application.yml
+          sed -i "s/db_username/$DB_USERNAME/" ./src/main/resources/application.yml
+          sed -i "s/db_password/$DB_PASSWORD/" ./src/main/resources/application.yml
+          cat ./src/main/resources/application.yml
+          ./gradlew build
+      - name: smoke test
+        run: |
+          apk --no-cache add curl  
+          java -jar ./build/libs/theme-park-ride-gradle.jar &
+          sleep 10
+          curl http://localhost:5000/actuator/health | grep "UP"
+      - name: unit test
+        run: |
+          ./gradlew test
+          grep testsuite build/test-results/test/TEST-com.exemple.ThemeParkRideGradleApplicationTests.xml
