@@ -22,7 +22,6 @@ jobs:
           ./gradlew build --info
       - name: smoke test
         run: |
-          apk --no-cache add curl  
           java -jar ./build/libs/theme-park-ride-gradle.jar &
           sleep 10
           curl http://localhost:5000/actuator/health | grep "UP"
