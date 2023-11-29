@@ -4,20 +4,15 @@ services:
     image: farloche/tpr:0.1.0
     container_name: theme-park-ride
     mem_limit: 512M
-    environment:
-      DB-URL: jdbc:mysql://mysql:3306/themepark
-      DB-USERNAME: tpr_user
-      DB-PASSWORD: themepark
     depends_on: 
       - mysql
     ports:
       - 5000:5000
-  mysql:
+  db:
     image: mysql:8.0
     container_name: mysql
     mem_limit: 512M
     environment:
-      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: themepark
-      MYSQL_USER: tpr_user
-      MYSQL_PASSWORD: themepark
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
