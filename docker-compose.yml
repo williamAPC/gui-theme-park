@@ -13,6 +13,7 @@ services:
     container_name: mysql
     mem_limit: 512M
     environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
       MYSQL_DATABASE: themepark
       MYSQL_USER: username
       MYSQL_PASSWORD: password
