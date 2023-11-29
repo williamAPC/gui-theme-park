@@ -17,12 +17,11 @@ jobs:
       - name: build
         run: |
           docker run -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes -e MYSQL_DATABASE=themepark -e MYSQL_USER=username -e MYSQL_PASSWORD=password -p 3306:3306 mysql:8.0
-          sleep 5
           sed -i "s/CI_PIPELINE_IID/${{ github.run_id }}/" ./src/main/resources/application.yml
           sed -i "s/CI_COMMIT_SHORT_SHA/${{ github.sha }}/" ./src/main/resources/application.yml
           sed -i "s/CI_COMMIT_BRANCH/${{ github.ref_name }}/" ./src/main/resources/application.yml
           cat ./src/main/resources/application.yml
-          ./gradlew build
+          ./gradlew build --info
       - name: smoke test
         run: |
           apk --no-cache add curl  
