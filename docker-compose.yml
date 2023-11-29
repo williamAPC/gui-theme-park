@@ -1,17 +1,20 @@
 version: "2"
 services:
-  theme-park-ride-gradle:
-    image: registry.gitlab.com/jhiberne/theme-park-ride-gradle:latest
-    container_name: theme-park-ride-gradle
+  theme-park-ride:
+    image: farloche/tpr:latest
+    container_name: theme-park-ride
     mem_limit: 512M
+    restart: on-failure
+    depends_on: 
+      - db
     ports:
       - 5000:5000
-  mysql:
-    image: mysql:5.7
+  db:
+    image: mysql:8.0
     container_name: mysql
     mem_limit: 512M
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
       MYSQL_DATABASE: themepark
-    ports:
-      - 3306:3306
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
