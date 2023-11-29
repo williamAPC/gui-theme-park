@@ -4,8 +4,9 @@ services:
     image: farloche/tpr:0.1.0
     container_name: theme-park-ride
     mem_limit: 512M
+    restart: on-failure
     depends_on: 
-      - mysql
+      - db
     ports:
       - 5000:5000
   db:
