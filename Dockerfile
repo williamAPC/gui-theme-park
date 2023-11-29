@@ -1,5 +1,5 @@
 FROM openjdk:12-alpine
-ENV DB-URL="jdbc:mysql://dbhost:dbport/dbname"
+ENV DB-URL="jdbc:mysql://db:3306/themepark"
 ENV DB-USERNAME="username"
 ENV DB-PASSWORD="password"
 ADD /build/libs/*.jar theme-park-ride-gradle.jar
