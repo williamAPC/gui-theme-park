@@ -45,3 +45,12 @@ jobs:
           export DB_PASSWORD=$BUILD_DB_PASSWORD
           ./gradlew test
           grep testsuite build/test-results/test/TEST-com.exemple.ThemeParkRideGradleApplicationTests.xml
+
+      - name: PMD test
+        run: |
+          export DB_URL=`echo jdbc:mysql://$BUILD_DB_HOST:3306/$BUILD_DB_NAME`
+          export DB_USERNAME=$BUILD_DB_USERNAME        
+          export DB_PASSWORD=$BUILD_DB_PASSWORD
+          ./gradlew pmdMain pmdTest
+          ls -alrt build/reports/pmd
+          
