@@ -1,11 +1,11 @@
 version: "2"
 services:
   theme-park-ride:
-    image: farloche/tpr:latest
+    image: p0l1na/themeparkride:latest
     container_name: theme-park-ride
     mem_limit: 512M
     restart: on-failure
-    depends_on: 
+    depends_on:
       - db
     ports:
       - 5000:5000
