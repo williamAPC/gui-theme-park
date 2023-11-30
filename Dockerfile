@@ -4,7 +4,7 @@ ENV DB_USERNAME="username"
 ENV DB_PASSWORD="password"
 RUN apk update
 RUN apk add curl
-ADD /build/libs/*.jar theme-park-ride-gradle.jar
+ADD build/libs/*.jar theme-park-ride-gradle.jar
 ENTRYPOINT exec java -jar theme-park-ride-gradle.jar
 HEALTHCHECK --interval=5m --timeout=3s --retries=3 \
-CMD curl -f http://localhost:5000/actuator/health  || exit 1
+    CMD curl -f http://localhost:5000/actuator/health  || exit 1
