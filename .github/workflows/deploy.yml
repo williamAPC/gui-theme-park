@@ -35,5 +35,5 @@ jobs:
           kubectl get all
       - name: install portainer
         run: |
+          helm repo add portainer https://portainer.github.io/k8s/
           helm install portainer portainer/portainer
-          
