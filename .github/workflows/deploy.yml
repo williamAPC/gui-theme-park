@@ -33,7 +33,10 @@ jobs:
       - name: kubectl get all
         run: |
           kubectl get all
-      - name: install portainer
+      - name: deploy 2 pods
         run: |
-          helm repo add portainer https://portainer.github.io/k8s/
-          helm install portainer portainer/portainer
+          kubectl create deployment tpr --image p0l1na/themeparkride --replicas 2
+#      - name: install portainer
+#        run: |
+#          helm repo add portainer https://portainer.github.io/k8s/
+#          helm install portainer portainer/portainer
