@@ -1,1 +1,8 @@
-
+namespace: dev
+replicas: 2
+repository: p0l1na/themeparkride:1.0.
+tag: 1.0.${{ env.IMAGE_TAG }}
+db_pw: ${{ secrets.DB_USER_PW_ENV }}
+ingress_host: tpr-ingress
+host: app.tpr.cloudns.org
+nameclusterip: tpr-clusterip
