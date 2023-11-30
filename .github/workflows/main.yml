@@ -16,15 +16,15 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: build
-        run: |
-          export DB_URL=`echo jdbc:mysql://$BUILD_DB_HOST:$BUILD_DB_PORT/$BUILD_DB_NAME`
-          MYSQL_DATABASE=$BUILD_DB_NAME
-          export DB_USERNAME=$BUILD_DB_USERNAME
+        run: |      
+          export MYSQL_DATABASE=$BUILD_DB_NAME
           export MYSQL_USER=$BUILD_DB_USERNAME
-          export DB_USERNAME=$BUILD_DB_PASSWORD
           export MYSQL_PASSWORD=$BUILD_DB_PASSWORD
           docker run -d --name db -e MYSQL_RANDOM_ROOT_PASSWORD=yes  -p 3306:3306 mysql:8.0
-
+          
+          export DB_URL=`echo jdbc:mysql://$BUILD_DB_HOST:$BUILD_DB_PORT/$BUILD_DB_NAME`
+          export DB_USERNAME=$BUILD_DB_USERNAME        
+          export DB_USERNAME=$BUILD_DB_PASSWORD
           sed -i "s/CI_PIPELINE_IID/${{ github.run_id }}/" ./src/main/resources/application.yml
           sed -i "s/CI_COMMIT_SHORT_SHA/${{ github.sha }}/" ./src/main/resources/application.yml
           sed -i "s/CI_COMMIT_BRANCH/${{ github.ref_name }}/" ./src/main/resources/application.yml
