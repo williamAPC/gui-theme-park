@@ -36,6 +36,9 @@ deploy:
 #          kubectl -n dev create deployment tpr --image p0l1na/themeparkride --replicas 2
       - name: deploy hello world on dev
         run: |
+          sed -i "s/CI_PIPELINE_IID/${{ github.run_id }}/" ./src/main/resources/application.yml
+          sed -i  's/version: \([0-9].*\)/${{GITHUB_RUN_NUMBER}}/' ./helm-chart/Chart.yml;
+          sed -i  's/appVersion: \("[0-9].*\)/appVersion: "${{GITHUB_RUN_NUMBER}}"/' ./helm-chart/Chart.yml;
           helm repo add examples https://helm.github.io/examples
           helm install -n dev  hello-world examples/hello-world --set service.port=3380
           helm install ./chart-helm
