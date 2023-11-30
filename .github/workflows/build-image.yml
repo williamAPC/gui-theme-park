@@ -1,13 +1,13 @@
 name: Build docker image
-run-name: ${{ github.actor }} / Build docker image
+run-name: ${{ github.actor }} / Build docker image 🐳
 
 on:
   push:
     branches:
-    - pgb-githubactions-workflows
-  # pull_request:
-  #   branches:
-  #   - main
+    - main
+  pull_request:
+    branches:
+    - main
 
 jobs:
   build:
