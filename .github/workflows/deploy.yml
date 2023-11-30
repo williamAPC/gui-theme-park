@@ -1,16 +1,21 @@
 name: Deploy
 run-name: ${{ github.actor }} is deploying  ${{ github.repository }} ${{ github.ref }} 🚀
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environnement de destination'
-        required: true
-        default: 'dev'
-        type: choice
-        options:
-        - dev
-        - prod
+  push:
+    branches:
+    - cja-deploy
+    
+# on:
+#  workflow_dispatch:
+#    inputs:
+#      environment:
+#        description: 'Environnement de destination'
+#        required: true
+#        default: 'dev'
+#        type: choice
+#        options:
+#        - dev
+#        - prod
         
 jobs:
   deploy:
