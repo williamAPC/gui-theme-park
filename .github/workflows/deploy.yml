@@ -21,7 +21,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: setup AWS credntials
+      - name: setup AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with: 
           aws-region: eu-west-3
