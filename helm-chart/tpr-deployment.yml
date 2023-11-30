@@ -17,14 +17,14 @@ spec:
     spec:
       containers:
         - name: "{{ .Chart.name }}"
-          image: "{{ .Values.app_image.repository }}:{{ .Values.app_image.tag}} | default .Chart.AppVersion }}"
+          image: "{{ .Values.app_image.repository }}:{{ .Values.app_image.tag}} | default .Chart.appVersion }}"
           env:
             - name: DB_URL
               value: 'jdbc:mysql://tpr-db.cx0riniaqwhm.eu-west-3.rds.amazonaws.com:3306/themepark_dev'
             - name: DB_USERNAME
-              value: "{{ .Values.db-user }}"
+              value: "{{ .Values.db_user }}"
             - name: DB_PASSWORD
-              value: "{{ .Values.db-pw }}"
+              value: "{{ .Values.db_pw }}"
           ports:
             - containerPort: 5000
 
@@ -33,7 +33,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.tpr-ingress.host }}
+  name: {{ .Values.ingress_host }}
 spec:
   ingressClassName: traefik
   rules:
@@ -44,7 +44,7 @@ spec:
           pathType: Prefix
           backend:
              service:
-              name: {{.Values.tpr-clusterip }}
+              name: {{.Values.clusterip }}
               port:
                 number: 80
 
@@ -53,7 +53,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{.Values.tpr-clusterip }}
+  name: {{.Values.clusterip }}
 spec:
   selector:
     app: {{ .Chart.name }}
