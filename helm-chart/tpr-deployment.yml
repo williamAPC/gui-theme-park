@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: "{{ .Chart.name }}"
-          image: "{{ .Values.app_image.repository }}:{{ .Values.app_image.tag}} | default .Chart.appVersion }}"
+          image: "{{ .Values.repository }}:{{ .Values.tag}} | default .Chart.appVersion }}"
           env:
             - name: DB_URL
               value: 'jdbc:mysql://tpr-db.cx0riniaqwhm.eu-west-3.rds.amazonaws.com:3306/themepark_dev'
