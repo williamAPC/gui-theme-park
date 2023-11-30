@@ -14,3 +14,7 @@ helm-lint:
         with:
           exec: helm upgrade --install github-magnolia-docker ./helm-chart
           kubeconfig: '${{ secrets.KUBECONFIG }}'
+
+
+
+https://github.com/magnolia-sre/magnolia-docker/blob/master/.github/workflows/pipeline.yml
