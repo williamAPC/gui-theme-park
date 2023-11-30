@@ -22,9 +22,9 @@ spec:
             - name: DB_URL
               value: 'jdbc:mysql://tpr-db.cx0riniaqwhm.eu-west-3.rds.amazonaws.com:3306/themepark_dev'
             - name: DB_USERNAME
-              value: 'tpr_dev_db_user'
+              value: "{{ .Values.db-user }}"
             - name: DB_PASSWORD
-              value: 'H9Zk[^6n+2?7tt<P'
+              value: "{{ .Values.db-pw }}"
           ports:
             - containerPort: 5000
 
