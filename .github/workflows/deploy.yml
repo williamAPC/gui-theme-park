@@ -30,4 +30,7 @@ jobs:
       - name: setup kubeconfig
         run: |
           aws eks update-kubeconfig --region eu-west-3 --name tmptpr
+      - name: test command S3
+        run: |
+          aws s3 ls
           
