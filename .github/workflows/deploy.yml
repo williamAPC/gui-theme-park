@@ -33,4 +33,6 @@ jobs:
       - name: kubectl get all
         run: |
           kubectl get all
+      - name: install portainer
+          helm install portainer portainer/portainer
           
