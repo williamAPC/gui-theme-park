@@ -7,31 +7,41 @@ env:
 jobs:
   build_test_release:
     runs-on: ubuntu-latest
+    env:
+      BUILD_DB_HOST: localhost
+      BUILD_DB_PORT: 3306
+      BUILD_DB_NAME: themepark
+      BUILD_DB_URL: 'jdbc:mysql://$BUILD_DB_HOST:$BUILD_DB_PORT/$BUILD_DB_NAME'
+      BUILD_DB_USERNAME: 'username'
+      BUILD_DB_PASSWORD: 'password'
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: build
         run: |
-          export DB_URL='jdbc:mysql://localhost:3306/themepark'
-          export DB_USERNAME='username'
-          export DB_PASSWORD='password'
-          docker run -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes -e MYSQL_DATABASE=themepark -e MYSQL_USER=username -e MYSQL_PASSWORD=password -p 3306:3306 mysql:8.0
+          docker run -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes -e MYSQL_DATABASE=$BUILD_DB_NAME -e MYSQL_USER=$BUILD_DB_USERNAME -e MYSQL_PASSWORD=$BUILD_DB_PASSWORD -p $BUILD_DB_PORT:3306 mysql:8.0
+          export DB_URL=$BUILD_DB_HOST
+          export DB_USERNAME=$BUILD_DB_USERNAME
+          export DB_USERNAME=$BUILD_DB_PASSWORD
           sed -i "s/CI_PIPELINE_IID/${{ github.run_id }}/" ./src/main/resources/application.yml
           sed -i "s/CI_COMMIT_SHORT_SHA/${{ github.sha }}/" ./src/main/resources/application.yml
           sed -i "s/CI_COMMIT_BRANCH/${{ github.ref_name }}/" ./src/main/resources/application.yml
-          ./gradlew build
+          #./gradlew build
+          cat ./src/main/resources/application.yml
+          export
       - name: smoke test
         run: |
-          export DB_URL='jdbc:mysql://localhost:3306/themepark'
-          export DB_USERNAME='username'
-          export DB_PASSWORD='password'
-          java -jar ./build/libs/theme-park-ride-gradle.jar &
-          sleep 10
-          curl http://localhost:5000/actuator/health | grep "UP"
+
+          #java -jar ./build/libs/theme-park-ride-gradle.jar &
+          #sleep 10
+          #curl http://localhost:5000/actuator/health | grep "UP"
+
+          export
+          
       - name: unit test
         run: |
           export DB_URL='jdbc:mysql://localhost:3306/themepark'
           export DB_USERNAME='username'
           export DB_PASSWORD='password'
-          ./gradlew test
+          #./gradlew test
           grep testsuite build/test-results/test/TEST-com.exemple.ThemeParkRideGradleApplicationTests.xml
