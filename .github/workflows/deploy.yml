@@ -29,5 +29,5 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: setup kubeconfig
         run: |
-          aws s3 ls
+          aws eks update-kubeconfig --region eu-west-3 --name tmptpr
           
