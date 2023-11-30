@@ -31,17 +31,17 @@ jobs:
           ./gradlew build
       - name: smoke test
         run: |
-
-          #java -jar ./build/libs/theme-park-ride-gradle.jar &
-          #sleep 10
-          #curl http://localhost:5000/actuator/health | grep "UP"
-
-          export
+          export DB_URL=`echo jdbc:mysql://$BUILD_DB_HOST:3306/$BUILD_DB_NAME`
+          export DB_USERNAME=$BUILD_DB_USERNAME        
+          export DB_PASSWORD=$BUILD_DB_PASSWORD
+          java -jar ./build/libs/theme-park-ride-gradle.jar &
+          sleep 10
+          curl http://localhost:5000/actuator/health | grep "UP"
           
       - name: unit test
         run: |
-          export DB_URL='jdbc:mysql://localhost:3306/themepark'
-          export DB_USERNAME='username'
-          export DB_PASSWORD='password'
-          #./gradlew test
+          export DB_URL=`echo jdbc:mysql://$BUILD_DB_HOST:3306/$BUILD_DB_NAME`
+          export DB_USERNAME=$BUILD_DB_USERNAME        
+          export DB_PASSWORD=$BUILD_DB_PASSWORD
+          ./gradlew test
           grep testsuite build/test-results/test/TEST-com.exemple.ThemeParkRideGradleApplicationTests.xml
