@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: "{{ .Chart.name }}-deployment"
+  namespace: "{{ .Values.namespace.name }}"
+  labels: 
+     app: "{{ .Chart.name }}"
+spec:
+  replicas: {{ .Values.replicas.count }}
+  selector:
+    matchLabels:
+       app: "{{ .Chart.name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Chart.name }}"
+    spec:
+      containers:
+        - name: "{{ .Chart.name }}"
+          image: "{{ .Values.app_image.repository }}:{{ .Values.app_image.tag}} | default .Chart.AppVersion }}"
