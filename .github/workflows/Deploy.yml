@@ -1,0 +1,23 @@
+name: Deploy
+run-name: ${{ github.actor }} is deploying  ${{ github.repository }} ${{ github.ref }} 🚀
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environnement de destination'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+        - dev
+        - prod
+        
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo
+        env:
+          ENVIRONNEMENT: ${{ inputs.environment }}
+        run: |
+          echo "environnement de production : $ENVIRONMENT" 
