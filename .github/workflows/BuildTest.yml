@@ -1,5 +1,5 @@
 name: Build and Test
-run-name: ${{ github.actor }} is building aznd testing  ${{ github.repository }} ${{ github.ref }} 🚀
+run-name: ${{ github.actor }} is building and testing  ${{ github.repository }} ${{ github.ref }} 🚀
 on: [push]
 env:
   ARTIFACT_NAME: theme-park-ride-v${{ github.run_id }}.jar
