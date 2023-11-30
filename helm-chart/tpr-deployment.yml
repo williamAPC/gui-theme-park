@@ -1,6 +1,5 @@
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
   name: "{{ .Chart.name }}-deployment"
   namespace: "{{ .Values.namespace.name }}"
@@ -19,3 +18,48 @@ spec:
       containers:
         - name: "{{ .Chart.name }}"
           image: "{{ .Values.app_image.repository }}:{{ .Values.app_image.tag}} | default .Chart.AppVersion }}"
+          env:
+            - name: DB_URL
+              value: 'jdbc:mysql://tpr-db.cx0riniaqwhm.eu-west-3.rds.amazonaws.com:3306/themepark_dev'
+            - name: DB_USERNAME
+              value: 'tpr_dev_db_user'
+            - name: DB_PASSWORD
+              value: 'H9Zk[^6n+2?7tt<P'
+          ports:
+            - containerPort: 5000
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.tpr-ingress.host }}
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: {{ .Values.host }}
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+             service:
+              name: {{.Values.tpr-clusterip }}
+              port:
+                number: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.tpr-clusterip }}
+spec:
+  selector:
+    app: {{ .Chart.name }}
+  type: ClusterIP
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 5000
