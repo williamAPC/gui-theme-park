@@ -5,7 +5,7 @@ env:
   ARTIFACT_NAME: theme-park-ride-v${{ github.run_id }}.jar
   APP_NAME: theme-park-ride
 jobs:
-  build_test_release:
+  build_test:
     runs-on: ubuntu-latest
     env:
       BUILD_DB_HOST: localhost
@@ -44,3 +44,4 @@ jobs:
           export DB_USERNAME=$BUILD_DB_USERNAME        
           export DB_PASSWORD=$BUILD_DB_PASSWORD
           ./gradlew test
+          
