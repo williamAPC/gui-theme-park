@@ -21,6 +21,9 @@ jobs:
           export MYSQL_USER=$BUILD_DB_USERNAME
           export MYSQL_PASSWORD=$BUILD_DB_PASSWORD
           docker run -d --name db -e MYSQL_RANDOM_ROOT_PASSWORD=yes  -p 3306:3306 mysql:8.0
+          export
+          docker inspect db
+          mysql -u username -p password -h localhost < echo "show databases;"
           
           export DB_URL=`echo jdbc:mysql://$BUILD_DB_HOST:3306/$BUILD_DB_NAME`
           export DB_USERNAME=$BUILD_DB_USERNAME        
@@ -29,9 +32,6 @@ jobs:
           sed -i "s/CI_COMMIT_SHORT_SHA/${{ github.sha }}/" ./src/main/resources/application.yml
           sed -i "s/CI_COMMIT_BRANCH/${{ github.ref_name }}/" ./src/main/resources/application.yml
           ./gradlew build
-          cat ./src/main/resources/application.yml
-          export
-          docker inspect db
       - name: smoke test
         run: |
 
