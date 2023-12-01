@@ -41,4 +41,4 @@ jobs:
           export DB_USERNAME="tpr_dev_db_user"
           export DB_PASSWORD="${{ secrets.DB_USER_PW_DEV }}"
           cat ./helm-chart/values.yml
-          helm install --upgrade tpr -n dev --values ./helm-chart/values.yml --set db_url=$DB_URL  --set db_password=$DB_PASSWORD --set db_username=$DB_USERNAME ./helm-chart
+          helm upgrade --install tpr -n dev --values ./helm-chart/values.yml --set db_url=$DB_URL  --set db_password=$DB_PASSWORD --set db_username=$DB_USERNAME ./helm-chart
