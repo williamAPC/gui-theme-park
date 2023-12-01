@@ -7,4 +7,4 @@ db_username: username
 db_password: password
 ingress_name: tpr-ingress
 host: localhost
-nameclusterip: tpr-clusterip
+clusterip_name: tpr-clusterip

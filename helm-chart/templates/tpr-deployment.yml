@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "{{ .Chart.name }}-deployment"
+  name: "{{ .Chart.Name }}-deployment"
   labels: 
-     app: "{{ .Chart.name }}"
+     app: "{{ .Chart.Name }}"
 spec:
-  replicas: {{ .Values.replicas.count }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-       app: "{{ .Chart.name }}"
+       app: "{{ .Chart.Name }}"
   template:
     metadata:
       labels:
-        app: "{{ .Chart.name }}"
+        app: "{{ .Chart.Name }}"
     spec:
       containers:
-        - name: "{{ .Chart.name }}"
-          image: "{{ .Values.repository }}:{{ .Values.tag}} | default .Chart.appVersion }}"
+        - name: "{{ .Chart.Name }}"
+          image: "{{ .Values.repository }}:{{ .Values.tag}}"
           env:
             - name: DB_URL
-              value: "${{ .Values.db_url }}"
+              value: "{{ .Values.db_url }}"
             - name: DB_USERNAME
-              value: "${{ .Values.db_username }}"
+              value: "{{ .Values.db_username }}"
             - name: DB_PASSWORD
               value: "{{ .Values.db_password }}"
           ports:
@@ -52,10 +52,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{.Values.clusterip }}
+  name: {{.Values.clusterip_name }}
 spec:
   selector:
-    app: {{ .Chart.name }}
+    app: {{ .Chart.Name }}
   type: ClusterIP
   ports:
   - name: http
