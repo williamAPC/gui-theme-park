@@ -36,7 +36,7 @@ jobs:
           aws eks update-kubeconfig --region eu-west-3 --name tmptpr
       - name: deploy on dev
         run: |
-#          export DB_URL=`echo jdbc:mysql://tpr-db.cx0riniaqwhm.eu-west-3.rds.amazonaws.com:3306/themepark_dev`
+          export DB_URL="jdbc:mysql://tpr-db.cx0riniaqwhm.eu-west-3.rds.amazonaws.com:3306/themepark_dev"
           export DB_USERNAME=tpr_dev_db_user
           export DB_PASSWORD=${{ secrets.DB_USER_PW_DEV }}
           export
