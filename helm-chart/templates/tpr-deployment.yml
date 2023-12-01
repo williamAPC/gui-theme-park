@@ -43,7 +43,7 @@ spec:
           pathType: Prefix
           backend:
              service:
-              name: {{.Values.clusterip }}
+              name: {{.Values.clusterip_name}}
               port:
                 number: 80
 
