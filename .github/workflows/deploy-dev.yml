@@ -1,21 +1,9 @@
-name: Deploy
-run-name: ${{ github.actor }} is deploying  ${{ github.repository }} ${{ github.ref }} 🚀
+name: Deploy on dev
+run-name: ${{ github.actor }} / Deploy on dev 🐱
 on:
   push:
     branches:
-    - cja-deploy
-    
-# on:
-#  workflow_dispatch:
-#    inputs:
-#      environment:
-#        description: 'Environnement de destination'
-#        required: true
-#        default: 'dev'
-#        type: choice
-#        options:
-#        - dev
-#        - prod
+    - dev
         
 jobs:
   deploy:
@@ -24,7 +12,7 @@ jobs:
       - name: git checkout gui-helm-chart
         uses: actions/checkout@v4
         with:
-          ref: refs/heads/gui-helm-chart          
+          ref: refs/heads/dev         
       - name: setup AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with: 
