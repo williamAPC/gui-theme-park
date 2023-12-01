@@ -1,9 +1,11 @@
 name: Deploy on dev
 run-name: ${{ github.actor }} / Deploy on dev 🐱
 on:
-  push:
-    branches:
-    - dev
+  workflow_run:
+    workflows: ["build-image"]
+    types: [completed]
+    branches: 
+      - dev
         
 jobs:
   deploy:
