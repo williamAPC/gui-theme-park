@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "{{ .Chart.name }}-deployment"
-  namespace: "{{ .Values.namespace.name }}"
   labels: 
      app: "{{ .Chart.name }}"
 spec:
@@ -20,9 +19,11 @@ spec:
           image: "{{ .Values.repository }}:{{ .Values.tag}} | default .Chart.appVersion }}"
           env:
             - name: DB_URL
-              value: 'jdbc:mysql://tpr-db.cx0riniaqwhm.eu-west-3.rds.amazonaws.com:3306/themepark_dev'
+              value: "${{ .Values.db_url }}"
+            - name: DB_USERNAME
+              value: "${{ .Values.db_username }}"
             - name: DB_PASSWORD
-              value: "{{ .Values.db_pw }}"
+              value: "{{ .Values.db_password }}"
           ports:
             - containerPort: 5000
 
@@ -31,7 +32,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.ingress_host }}
+  name: {{ .Values.ingress_name }}
 spec:
   ingressClassName: traefik
   rules:
