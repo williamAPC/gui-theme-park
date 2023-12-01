@@ -10,6 +10,7 @@ on:
         
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: git checkout gui-helm-chart
@@ -35,3 +36,8 @@ jobs:
           export DB_PASSWORD="${{ secrets.DB_USER_PW_DEV }}"
           cat ./helm-chart/values.yml
           helm upgrade --install tpr -n dev --values ./helm-chart/values.yml --set host=dev.tpr.cloudns.org --set db_url=$DB_URL  --set db_password=$DB_PASSWORD --set db_username=$DB_USERNAME ./helm-chart
+  on-build-docker-image-failure:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }} 
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Build docker image failed. Can't deploy on dev"
