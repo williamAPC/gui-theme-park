@@ -38,7 +38,7 @@ jobs:
         run: |
           export
           export DB_URL="jdbc:mysql://tpr-db.cx0riniaqwhm.eu-west-3.rds.amazonaws.com:3306/themepark_dev"
-#          export DB_USERNAME=tpr_dev_db_user
-#          export DB_PASSWORD=${{ secrets.DB_USER_PW_DEV }}
-#          cat ./helm-chart/values.yml
-#          helm template tpr -n dev --values ./helm-chart/values.yml --set db_url=$DB_URL  --set db_password=$DB_PASSWORD --set db_username=$DB_USERNAME ./helm-chart
+          export DB_USERNAME="tpr_dev_db_user"
+          export DB_PASSWORD="${{ secrets.DB_USER_PW_DEV }}"
+          cat ./helm-chart/values.yml
+          helm template tpr -n dev --values ./helm-chart/values.yml --set db_url=$DB_URL  --set db_password=$DB_PASSWORD --set db_username=$DB_USERNAME ./helm-chart
