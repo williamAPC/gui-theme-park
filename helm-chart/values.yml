@@ -1,0 +1,10 @@
+namespace: dev
+replicas: 2
+repository: p0l1na/themeparkride
+tag: latest
+db_url: jdbc:mysql://db:3306/themepark 
+db_username: username
+db_password: password
+ingress_name: tpr-ingress
+host: localhost
+clusterip_name: tpr-clusterip
