@@ -19,6 +19,7 @@ info:
 
 management:
   endpoints:
-    web:
-      exposure:
-        include: '*'
+    enabled-by-default: false
+  endpoint:
+    health:
+      enabled: true
