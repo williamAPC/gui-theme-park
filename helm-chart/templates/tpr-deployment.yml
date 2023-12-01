@@ -43,7 +43,11 @@ spec:
           pathType: Prefix
           backend:
              service:
+<<<<<<< HEAD
               name: {{.Values.clusterip_name}}
+=======
+              name: {{.Values.clusterip_name }}
+>>>>>>> 028a75a6140023a117719aafd73b1c5f5fd37172
               port:
                 number: 80
 
