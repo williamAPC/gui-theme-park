@@ -36,10 +36,10 @@ jobs:
           aws eks update-kubeconfig --region eu-west-3 --name tmptpr
       - name: deploy on dev
         run: |
-          export DB_HOST="${{ values.DB_HOST }}"
-          export DB_NAME_DEV="${{ values.DB_NAME_DEV }}"
+          export DB_HOST="${{ env.DB_HOST }}"
+          export DB_NAME_DEV="${{ env.DB_NAME_DEV }}"
           export DB_URL=`echo jdbc:mysql://$DB_HOST:3306/$DB_NAME_DEV`
-          export DB_USERNAME="{{ values.DB_USERNAME_DEV }}"
+          export DB_USERNAME="{{ env.DB_USERNAME_DEV }}"
           export DB_PASSWORD="${{ secrets.DB_USER_PW_DEV }}"
           cat ./helm-chart/values.yml
           helm upgrade --install tpr -n dev --values ./helm-chart/values.yml --set host=dev.tpr.cloudns.org --set db_url=$DB_URL  --set db_password=$DB_PASSWORD --set db_username=$DB_USERNAME ./helm-chart
