@@ -21,6 +21,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: git checkout gui-helm-chart
+        uses: actions/checkout@v4
+        with:
+          ref: refs/heads/gui-helm-chart
+      - name: check checkout
+        run: |
+          cat helm-chart/*
       - name: setup AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with: 
@@ -30,13 +37,8 @@ jobs:
       - name: setup kubeconfig
         run: |
           aws eks update-kubeconfig --region eu-west-3 --name tmptpr
-      - name: kubectl get all
-        run: |
           kubectl get all
-#     - name: deploy 2 pods on dev
-#       run: |
-#          kubectl -n dev create deployment tpr --image p0l1na/themeparkride --replicas 2
-      - name: deploy hello world on dev
-        run: |
-          helm repo add examples https://helm.github.io/examples
-          helm install -n dev  hello-world examples/hello-world --set service.port=3380
+#      - name: deploy hello world on dev
+#        run: |
+#          helm repo add examples https://helm.github.io/examples
+#          helm install -n dev  hello-world examples/hello-world --set service.port=3380
