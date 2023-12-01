@@ -24,10 +24,7 @@ jobs:
       - name: git checkout gui-helm-chart
         uses: actions/checkout@v4
         with:
-          ref: refs/heads/gui-helm-chart
-      - name: check checkout
-        run: |
-          cat helm-chart/*
+          ref: refs/heads/gui-helm-chart          
       - name: setup AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with: 
@@ -38,7 +35,9 @@ jobs:
         run: |
           aws eks update-kubeconfig --region eu-west-3 --name tmptpr
           kubectl get all
-#      - name: deploy hello world on dev
-#        run: |
-#          helm repo add examples https://helm.github.io/examples
-#          helm install -n dev  hello-world examples/hello-world --set service.port=3380
+      - name: deploy hello world on dev
+        run: |
+          export DB_URL=`echo jdbc:mysql://tpr-db.cx0riniaqwhm.eu-west-3.rds.amazonaws.com:3306/themepark_dev`
+          export DB_USERNAME=tpr_dev_db_user        
+          export DB_PASSWORD=${{ secrets.DB_USER_PW_DEV }}
+          helm upgrade --install tpr -n dev --values values.yml --set db_url=$DB_URL  --set db_password=$DB_PASSWORD --set db_username=$DB_USERNAME --set db_url= ./helm-chart
