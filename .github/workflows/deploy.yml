@@ -34,7 +34,6 @@ jobs:
       - name: setup kubeconfig
         run: |
           aws eks update-kubeconfig --region eu-west-3 --name tmptpr
-          kubectl get all
       - name: deploy on dev
         run: |
 #          export DB_URL=`echo jdbc:mysql://tpr-db.cx0riniaqwhm.eu-west-3.rds.amazonaws.com:3306/themepark_dev`
