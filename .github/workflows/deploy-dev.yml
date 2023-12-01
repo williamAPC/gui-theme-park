@@ -39,4 +39,6 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Build docker image failed. Can't deploy on dev"
+      - run: |
+          echo "Build docker image failed. Can't deploy on dev"
+          exit 1
