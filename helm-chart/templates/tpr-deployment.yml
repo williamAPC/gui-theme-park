@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Chart.Name }}-deployment"
+  labels: 
+     app: "{{ .Chart.Name }}"
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+       app: "{{ .Chart.Name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Chart.Name }}"
+    spec:
+      containers:
+        - name: "{{ .Chart.Name }}"
+          image: "{{ .Values.repository }}:{{ .Values.tag}}"
+          env:
+            - name: DB_URL
+              value: "{{ .Values.db_url }}"
+            - name: DB_USERNAME
+              value: "{{ .Values.db_username }}"
+            - name: DB_PASSWORD
+              value: "{{ .Values.db_password }}"
+          ports:
+            - containerPort: 5000
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.ingress_name }}
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: {{ .Values.host }}
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+             service:
+              name: {{.Values.clusterip_name}}
+              port:
+                number: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.clusterip_name }}
+spec:
+  selector:
+    app: {{ .Chart.Name }}
+  type: ClusterIP
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 5000
