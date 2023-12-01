@@ -2,7 +2,7 @@ name: Deploy on dev
 run-name: ${{ github.actor }} / Deploy on dev 🐱
 on:
   workflow_run:
-    workflows: ["build-image"]
+    workflows: ["Build docker image"]
     types: [completed]
     branches: 
       - dev
