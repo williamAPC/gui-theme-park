@@ -40,5 +40,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: | 
-        echo "Build docker image failed. Can't deploy on prod"
-        exit 1
+          echo "Build docker image failed. Can't deploy on prod"
+          exit 1
