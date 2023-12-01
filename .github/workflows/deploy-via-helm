@@ -37,8 +37,14 @@ deploy:
       - name: deploy hello world on dev
         run: |
           sed -i "s/CI_PIPELINE_IID/${{ github.run_id }}/" ./src/main/resources/application.yml
-          sed -i  's/version: \([0-9].*\)/${{GITHUB_RUN_NUMBER}}/' ./helm-chart/Chart.yml;
-          sed -i  's/appVersion: \("[0-9].*\)/appVersion: "${{GITHUB_RUN_NUMBER}}"/' ./helm-chart/Chart.yml;
+          sed -i  's/version: \([0-9].*\)/version: 1.0.${{ github.run_number }}/' ./helm-chart/Chart.yml
+          sed -i  's/appVersion: \([0-9].*\)/appVersion: "1.0.${{ github.run_number }}"/' ./helm-chart/Chart.yml
+          sed -i  's/tag: \([0-9].*\)/tag: 1.0.${{ github.run_number }}/' ./helm-chart/values.yml
+          sed -i  's/namespace: \([a-z].*\)/namespace: dev }}/' ./helm-chart/values.yml
+         # sed -i  's/namespace: \([a-z].*\)/namespace: prod }}/' ./helm-chart/values.yml
+          sed -i  's/db_pw: \([a-z].*\)/db_pw: ${{ secrets.DB_USER_PW_ENV }}/' ./helm-chart/values.yml
+         # sed -i  's/db_pw: \([a-z].*\)/db_pw: ${{ secrets.DB_USER_PW_PROD }}/' ./helm-chart/values.yml
+          sed -i  's/repository: p0l1na\/themeparkride:1.0.\([0-9]\)/repository: p0l1na\/themeparkride:1.0.${{ github.run_number }}/' ./helm-chart/values.yml
           helm repo add examples https://helm.github.io/examples
           helm install -n dev  hello-world examples/hello-world --set service.port=3380
           helm install ./chart-helm
