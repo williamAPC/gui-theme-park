@@ -21,3 +21,6 @@
 .idea/
 *.tmproj
 .vscode/
+
+# Files from the project
+.clusterissuer.yml
