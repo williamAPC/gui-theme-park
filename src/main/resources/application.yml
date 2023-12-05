@@ -8,7 +8,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate.ddl-auto: create
   hikari:
-    maximumPoolSize: 5
+    maximumPoolSize: 3
 
 server:
   port: 5000
