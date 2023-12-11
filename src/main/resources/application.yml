@@ -4,6 +4,8 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+    hikari:
+      maximumPoolSize: 3
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate.ddl-auto: create
@@ -21,6 +23,7 @@ info:
 
 management:
   endpoints:
-    web:
-      exposure:
-        include: '*'
+    enabled-by-default: false
+  endpoint:
+    health:
+      enabled: true
