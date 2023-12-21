@@ -41,7 +41,7 @@ module "rds_sg" {
     vpc_id      = module.network.vpc_id
 
     ingress_cidr_blocks = ["0.0.0.0/0"]
-    ingress_rules       = ["http-3306-tcp"]
+    ingress_rules       = ["mysql-tcp"]
 
     egress_cidr_blocks = ["0.0.0.0/0"]
     egress_rules       = ["all-all"]
