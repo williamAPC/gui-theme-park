@@ -1,15 +1,17 @@
+data aws_availability_zones "available" {}
+
 module "rds" {
     source  = "terraform-aws-modules/rds/aws"
 
     identifier = "tpr-db"
 
-    availability_zone = var.aws_region + "a"
+    availability_zone = data.aws_availability_zones.available.names
 
-    engine              = "mariadb"
-    engine_version      = "10.4.14"
-    family              = "mariadb10.4"
-    instance_class      = "db.t2.micro"
-    allocated_storage   = 5
+    engine              = var.engine
+    engine_version      = var.engine_version
+    family              = var.family
+    instance_class      = var.instance_class
+    allocated_storage   = var.allocated_storage
     multi_az            = false
     deletion_protection = true
 
@@ -17,16 +19,18 @@ module "rds" {
     username = var.db_username
     password = var.db_password
     port     = 3306
+
     manage_master_user_password = false
 
     vpc_security_group_ids = [module.rds_sg.security_group_id]
 
     create_db_subnet_group = true
     db_subnet_group_name   = "themeparkride-db-subnet-group"
-    subnet_ids = var.private_subnets_ids
+    subnet_ids             = var.private_subnets_ids
+
+    create_db_parameter_group = false
 
     options  = []
-    create_db_parameter_group = false
 }
 
 module "rds_sg" {

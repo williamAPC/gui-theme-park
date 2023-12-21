@@ -12,9 +12,9 @@ module "network" {
 }
 
 module "rds" {
-    source      = "./rds"
-    aws_region  = var.aws_region
-    db_name     = var.db_name
-    db_username = var.db_username
-    db_password = var.db_password
+    source              = "./rds"
+    db_name             = var.db_name
+    db_username         = var.db_username
+    db_password         = var.db_password
+    private_subnets_ids = module.network.private_subnets_ids
 }
