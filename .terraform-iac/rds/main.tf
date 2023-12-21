@@ -23,7 +23,7 @@ module "rds" {
 
     create_db_subnet_group = true
     db_subnet_group_name   = "themeparkride-db-subnet-group"
-    #subnet_ids = var.private_subnets_id
+    subnet_ids = var.private_subnets_ids
 
     options  = []
     create_db_parameter_group = false

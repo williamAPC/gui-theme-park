@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+### Terraform ###
+.terraform-iac/.terraform/
+.terraform-iac/.terraform.lock.hcl
