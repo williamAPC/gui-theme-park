@@ -36,6 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-### terraform ###
+### Terraform ###
 .terraform-iac/.*
 .terraform-iac/*tfstate*
