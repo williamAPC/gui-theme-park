@@ -3,7 +3,12 @@ output "vpc_id" {
     value       = module.vpc.vpc_id
 }
 
-output "internet_gateway_ip" {
-    description = "Internet Gateway IP"
-    value       = module.vpc.internet_gateway_ip
+output "public_nets" {
+  description = "List of IDs of public subnets"
+  value       = module.vpc.public_subnets
+}
+
+output "private_nets" {
+  description = "List of IDs of private subnets"
+  value       = module.vpc.private_subnets
 }
