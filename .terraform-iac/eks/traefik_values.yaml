@@ -1,0 +1,15 @@
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+  fallbackApiVersion: v1
+ingressRoute:
+  dashboard:
+    enabled: false
+service:
+  enabled: false
+
+ports:
+  web:
+    expose: false
+  websecure:
+    nodePort: 32443

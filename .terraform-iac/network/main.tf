@@ -1,8 +1,6 @@
 # recupère dynamiquement les zones de disponibilités
 data "aws_availability_zones" "available" {}
 
-
-
 module "vpc" {
     source = "terraform-aws-modules/vpc/aws"
     version = "5.4.0"
@@ -23,36 +21,34 @@ module "vpc" {
   }
 }
 
-module "alb" {
-    source = "terraform-aws-modules/alb/aws"
-
-    name = "${var.app}-ALB"
-
+resource "aws_lb" "nlb" {
+    name               = "${var.app}-NLB"
+    internal           = false
     load_balancer_type = "network"
-    vpc_id             = module.vpc.vpc_id
+    security_groups    = ["${module.nlb_sg.security_group_id}"]
     subnets            = module.vpc.public_subnets
-    security_groups    = [ "${module.alb_sg.security_group_id}" ]
+
+    enable_deletion_protection = false
 
     tags = {
       app         = "${var.app}"
-      tf_module   = "${var.app}-ALB"
-  }
+    }
 }
 
-resource "aws_lb_listener" "app-alb-listener" {
-    load_balancer_arn = module.alb.this_lb_arn
+resource "aws_lb_listener" "app-nlb-listener" {
+    load_balancer_arn = aws_lb.nlb.arn
     port              = 443
     protocol          = "TCP"
 
     default_action {
         type             = "forward"
-        target_group_arn =  aws_alb_target_group.app-alb-target-group.arn
+        target_group_arn =  aws_lb_target_group.app-nlb-target-group.arn
     }
 }
 
-resource "aws_alb_target_group" "app-alb-target-group" {
-    name     = "${var.app}-ALB-TG"
-    port     = 443
+resource "aws_lb_target_group" "app-nlb-target-group" {
+    name     = "${var.app}-NLB-TG"
+    port     = 32443
     protocol = "TCP"
     vpc_id   = module.vpc.vpc_id
 
@@ -61,17 +57,17 @@ resource "aws_alb_target_group" "app-alb-target-group" {
         unhealthy_threshold = 2
         timeout             = 3
         interval            = 30
-        path                = "/"
+        path                = "/actuator/health"
         matcher             = "200"
     }
 }
 
-module "alb_sg" {
+module "nlb_sg" {
     source = "terraform-aws-modules/security-group/aws"
     version = "4.0.0"
 
-    name        = "${var.app}-ALB-SG"
-    description = "Security group for ALB"
+    name        = "${var.app}-NLB-SG"
+    description = "Security group for NLB"
 
     vpc_id = module.vpc.vpc_id
 
@@ -82,6 +78,6 @@ module "alb_sg" {
     egress_rules = ["all-all"]
     tags = {
       app         = "${var.app}"
-      tf_module   = "${var.app}-ALB-SG"
+      tf_module   = "${var.app}-NLB-SG"
   }
 }

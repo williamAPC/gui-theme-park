@@ -1,14 +1,12 @@
-data aws_availability_zones "available" {}
-
+/*
 module "rds" {
     source  = "terraform-aws-modules/rds/aws"
 
     identifier = "${var.app}-db"
 
-    availability_zone = data.aws_availability_zones.available.names
-
     engine              = var.engine
     engine_version      = var.engine_version
+    major_engine_version = var.major_engine_version
     family              = var.family
     instance_class      = var.instance_class
     allocated_storage   = var.allocated_storage
@@ -52,3 +50,5 @@ module "rds_sg" {
     egress_cidr_blocks = ["0.0.0.0/0"]
     egress_rules       = ["all-all"]
 }
+
+*/

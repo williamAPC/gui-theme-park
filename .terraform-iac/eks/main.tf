@@ -1,4 +1,4 @@
-/*data "aws_eks_cluster_auth" "default" {
+data "aws_eks_cluster_auth" "default" {
   name = "tpr"
 }
 
@@ -30,9 +30,10 @@ module "eks" {
     node-group1 = {
       name = "${var.app}-node-group"
 
-      min_size     = 1
-      max_size     = 1
-      desired_size = 1
+      min_size     = 2
+      max_size     = 2
+      desired_size = 2
+
     }
   }
 
@@ -73,17 +74,87 @@ module "eks" {
   }
 }
 
-/*
+resource "aws_autoscaling_attachment" "node_group_to_NLB_attachment" {
+  autoscaling_group_name = module.eks.eks_managed_node_groups_autoscaling_group_names[0]
+  lb_target_group_arn    = var.target_group_arn
+}
+
+provider "helm" {
+    kubernetes {
+        host                   = module.eks.cluster_endpoint
+        cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+        token                  = data.aws_eks_cluster_auth.default.token
+    }
+}
+
+resource "kubernetes_namespace" "traefik" {
+    metadata {
+      name = "traefik"
+    }
+  
+}
+
 resource "helm_release" "traefik_ingress" {
   name       = "traefik-ingress-controller"
+  namespace  = "traefik"
 
   repository = "https://helm.traefik.io/traefik"
   chart      = "traefik"
 
+  values = [
+    "${file("./eks/traefik_values.yaml")}"
+  ]
+}
+
+resource "kubernetes_namespace" "cert-manager" {
+    metadata {
+      name = "cert-manager"
+    }
+    depends_on = [ module.eks ]
+}
+
+resource "helm_release" "cert-manager" {
+  name       = "cert-manager"
+  namespace  = "cert-manager"
+
+  repository = "https://charts.jetstack.io"
+  chart      = "cert-manager"
+
   set {
-    name  = "service.type"
-    value = "ClusterIP"
+    name  = "installCRDs"
+    value = "true"
   }
 }
-*/
 
+provider "kubectl" {
+    host                   = module.eks.cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+    token                  = data.aws_eks_cluster_auth.default.token
+}
+
+data "template_file" "cluster-issuer" {
+  template = file("./eks/cluster-issuer.yaml")
+  vars = {
+    cluster_issuer_email = var.cluster_issuer_email
+  }
+}
+
+resource "kubectl_manifest" "cluster-issuer" {
+  yaml_body = tostring(data.template_file.cluster-issuer.rendered)
+
+  depends_on = [ helm_release.cert-manager ]
+}
+
+resource "kubernetes_namespace" "dev" {
+    metadata {
+      name = "dev"
+    }
+    depends_on = [ module.eks ]
+}
+
+resource "kubernetes_namespace" "prod" {
+    metadata {
+      name = "prod"
+    }
+    depends_on = [ module.eks ]
+}

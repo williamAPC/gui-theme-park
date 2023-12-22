@@ -93,3 +93,9 @@ variable "user4" {
   description = "IAM user4"
   default = "github-deploy"
 }
+
+variable "cluster_issuer_email" {
+  type = string
+  default = "nom@mail.com"
+  description = "email for letsencrypt"
+}
