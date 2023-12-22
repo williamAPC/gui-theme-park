@@ -10,6 +10,10 @@ variable "private_nets" {
     type        = list(string)
 }
 
+variable "public_subnets" {
+    type        = list(string)
+}
+
 variable "db_name" {
     type        = string
 }

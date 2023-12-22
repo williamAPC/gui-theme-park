@@ -1,4 +1,3 @@
-/*
 module "rds" {
     source  = "terraform-aws-modules/rds/aws"
 
@@ -44,11 +43,9 @@ module "rds_sg" {
     description = "Security group for RDS"
     vpc_id      = var.vpc_id
 
-    ingress_cidr_blocks = ["0.0.0.0/0"]
+    ingress_cidr_blocks = var.public_subnets
     ingress_rules       = ["mysql-tcp"]
 
     egress_cidr_blocks = ["0.0.0.0/0"]
     egress_rules       = ["all-all"]
 }
-
-*/
