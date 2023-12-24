@@ -5,8 +5,11 @@ ingressClass:
 ingressRoute:
   dashboard:
     enabled: false
-service:
-  enabled: false
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
 
 ports:
   web:

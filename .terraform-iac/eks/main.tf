@@ -12,17 +12,17 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 19.0"
 
-  cluster_name    = "${var.app}"
+  cluster_name    = var.app
   cluster_version = "1.28"
 
-  cluster_endpoint_public_access  = true
+  cluster_endpoint_public_access = true
 
   vpc_id                   = var.vpc_id
   subnet_ids               = var.public_nets
   control_plane_subnet_ids = var.public_nets
 
   eks_managed_node_group_defaults = {
-    ami_type = "${var.ami_type}"
+    ami_type       = "${var.ami_type}"
     instance_types = ["${var.instance_types}"]
   }
 
@@ -56,7 +56,7 @@ module "eks" {
       username = "${var.user2}"
       groups   = ["system:masters"]
     },
-        {
+    {
       userarn  = "arn:aws:iam::${var.account_id}:user/${var.user3}"
       username = "${var.user3}"
       groups   = ["system:masters"]
@@ -69,8 +69,8 @@ module "eks" {
   ]
 
   tags = {
-    app         = "${var.app}"
-    tf_module   = "${var.app}-eks"
+    app       = "${var.app}"
+    tf_module = "${var.app}-eks"
   }
 }
 
@@ -80,23 +80,24 @@ resource "aws_autoscaling_attachment" "node_group_to_NLB_attachment" {
 }
 
 provider "helm" {
-    kubernetes {
-        host                   = module.eks.cluster_endpoint
-        cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
-        token                  = data.aws_eks_cluster_auth.default.token
-    }
+  kubernetes {
+    host                   = module.eks.cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+    token                  = data.aws_eks_cluster_auth.default.token
+  }
 }
 
 resource "kubernetes_namespace" "traefik" {
-    metadata {
-      name = "traefik"
-    }
-  
+  metadata {
+    name = "traefik"
+  }
+
+  depends_on = [module.eks]
 }
 
 resource "helm_release" "traefik_ingress" {
-  name       = "traefik-ingress-controller"
-  namespace  = "traefik"
+  name      = "traefik-ingress-controller"
+  namespace = "traefik"
 
   repository = "https://helm.traefik.io/traefik"
   chart      = "traefik"
@@ -104,18 +105,19 @@ resource "helm_release" "traefik_ingress" {
   values = [
     "${file("./eks/traefik_values.yaml")}"
   ]
+  depends_on = [kubernetes_namespace.traefik]
 }
 
 resource "kubernetes_namespace" "cert-manager" {
-    metadata {
-      name = "cert-manager"
-    }
-    depends_on = [ module.eks ]
+  metadata {
+    name = "cert-manager"
+  }
+  depends_on = [module.eks]
 }
 
 resource "helm_release" "cert-manager" {
-  name       = "cert-manager"
-  namespace  = "cert-manager"
+  name      = "cert-manager"
+  namespace = "cert-manager"
 
   repository = "https://charts.jetstack.io"
   chart      = "cert-manager"
@@ -124,12 +126,13 @@ resource "helm_release" "cert-manager" {
     name  = "installCRDs"
     value = "true"
   }
+  depends_on = [kubernetes_namespace.cert-manager]
 }
 
 provider "kubectl" {
-    host                   = module.eks.cluster_endpoint
-    cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
-    token                  = data.aws_eks_cluster_auth.default.token
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+  token                  = data.aws_eks_cluster_auth.default.token
 }
 
 data "template_file" "cluster-issuer" {
@@ -142,19 +145,19 @@ data "template_file" "cluster-issuer" {
 resource "kubectl_manifest" "cluster-issuer" {
   yaml_body = tostring(data.template_file.cluster-issuer.rendered)
 
-  depends_on = [ helm_release.cert-manager ]
+  depends_on = [helm_release.cert-manager]
 }
 
 resource "kubernetes_namespace" "dev" {
-    metadata {
-      name = "dev"
-    }
-    depends_on = [ module.eks ]
+  metadata {
+    name = "dev"
+  }
+  depends_on = [module.eks]
 }
 
 resource "kubernetes_namespace" "prod" {
-    metadata {
-      name = "prod"
-    }
-    depends_on = [ module.eks ]
+  metadata {
+    name = "prod"
+  }
+  depends_on = [module.eks]
 }

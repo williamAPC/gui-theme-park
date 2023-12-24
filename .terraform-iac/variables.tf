@@ -19,7 +19,7 @@ variable "namespace" {
 variable "db_name" {
   type        = string
   description = "DB name"
-  default     = "themparkride"
+  default     = "themeparkride"
 }
 
 variable "db_username" {

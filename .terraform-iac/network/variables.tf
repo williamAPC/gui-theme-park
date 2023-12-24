@@ -1,9 +1,9 @@
 variable "vpc_cidr" {
-    type        = string
+  type = string
 }
 
 variable "aws_region" {
-    type        = string
+  type = string
 }
 
 variable "app" {
@@ -11,9 +11,9 @@ variable "app" {
 }
 
 variable "private_subnets" {
-    type        = list(string)
+  type = list(string)
 }
 
 variable "public_subnets" {
-    type        = list(string)
+  type = list(string)
 }
