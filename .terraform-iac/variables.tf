@@ -66,7 +66,7 @@ variable "ami_type" {
 variable "account_id" {
   type        = string
   description = "AWS Account ID"
-  sensitive   = "285679047437é
+  sensitive   = "285679047437"
 }
 
 variable "iam_list" {
