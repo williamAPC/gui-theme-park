@@ -30,7 +30,7 @@ variable "db_username" {
 variable "db_password" {
   type        = string
   description = "DB password"
-  default   = password123
+  default   = "password123"
 }
 
 variable "vpc_cidr" {
