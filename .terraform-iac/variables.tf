@@ -63,11 +63,11 @@ variable "ami_type" {
   default     = "AL2_x86_64"
 }
 
-#variable "account_id" {
- # type        = string
- # description = "AWS Account ID"
-#  sensitive   = true
-#}
+variable "account_id" {
+  type        = string
+  description = "AWS Account ID"
+  sensitive   = "285679047437é
+}
 
 variable "iam_list" {
   type        = list(string)
