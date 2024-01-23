@@ -1,11 +1,9 @@
 terraform {
-  backend "s3" {
-    bucket =  "tprtf"
-    key = "tpriacstate/terraform.tfstate"
-#       region can't be set with variables.tf here, should be set with environment variable AWS_REGION
-    region = "eu-west-3"
-    dynamodb_table = "tpr-tfstate-locking"
-    encrypt = true
+  cloud {
+    organization = "GuillaumeHenriOrg"
+    workspaces {
+       name = "my-demo-test"
+    }
   }
 
   required_providers {
@@ -18,4 +16,6 @@ terraform {
 
 provider "aws" {
   region = var.aws_region
+  access_key = ${{ secret.AWS_ACCESS_KEY }}
+  secret_key = ${{ secret.AWS_SECRET_ACCESS_KEY }}
 }
