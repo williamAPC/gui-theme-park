@@ -30,7 +30,7 @@ variable "db_username" {
 variable "db_password" {
   type        = string
   description = "DB password"
-  sensitive   = true
+  default   = password123
 }
 
 variable "vpc_cidr" {
@@ -63,11 +63,11 @@ variable "ami_type" {
   default     = "AL2_x86_64"
 }
 
-variable "account_id" {
-  type        = string
-  description = "AWS Account ID"
-  sensitive   = true
-}
+#variable "account_id" {
+ # type        = string
+ # description = "AWS Account ID"
+#  sensitive   = true
+#}
 
 variable "iam_list" {
   type        = list(string)
