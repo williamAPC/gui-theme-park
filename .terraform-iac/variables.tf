@@ -21,17 +21,15 @@ variable "db_name" {
   description = "DB name"
   default     = "themeparkride"
 }
- # variable "db_username" {
- #   type        = string
- #   description = "DB username"
- #   default     = "admin"
- # }
+  variable "db_username" {
+    type        = string
+    description = "DB username"
+  }
 
-  #variable "db_password" {
-  #  type        = string
-  #  description = "DB password"
-  # default   = ""
-#}
+  variable "db_password" {
+    type        = string
+    description = "DB password"
+}
 
 variable "vpc_cidr" {
   type        = string
