@@ -72,7 +72,7 @@ variable "account_id" {
 variable "iam_list" {
   type        = list(string)
   description = "list of IAM user"
-  default     = ["chris", "guillaume", "pauline", "github_deploy"]
+  default     = ["chris", "guillaume", "Henri", "pauline", "github_deploy"]
 }
 
 variable "cluster_issuer_email" {
