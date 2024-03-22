@@ -1,3 +1,10 @@
+
+provider "aws" {
+  region = "eu-west-3"
+}
+
+
+
 terraform {
   backend "s3" {
     bucket =  "guitests3bucket"
@@ -16,6 +23,4 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = "eu-west-3"
-}
+
