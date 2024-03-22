@@ -43,6 +43,17 @@ jobs:
       run: terraform fmt
 
     # Generates an execution plan for Terraform
+    - name: Replace Token in k8s manifests
+      uses: cschleiden/replace-tokens@v1
+      with:
+        tokenPrefix: '__'
+        tokenSuffix: '__'
+        files: '[.terraform-iac/*.yaml"]'
+      env:
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+
     - name: Terraform Plan
       working-directory: .terraform-iac/
       env:
@@ -55,15 +66,7 @@ jobs:
       # On push to "master", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     
-    - name: Replace Token in k8s manifests
-      uses: cschleiden/replace-tokens@v1
-      with:
-        tokenPrefix: '__'
-        tokenSuffix: '__'
-        files: '[.terraform-iac/*.yaml"]'
-      env:
-        DB_USERNAME: ${{ secrets.DB_USERNAME }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
   
     - name: Terraform Apply
       working-directory: .terraform-iac/
