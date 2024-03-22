@@ -59,7 +59,7 @@ jobs:
       uses: cschleiden/replace-tokens@v1
       with:
         tokenPrefix: '_{_'
-        tokenSuffix: '_}_'
+        tokenSuffix: '_}'
         files: '[.terraform-iac/*.yaml"]'
       env:
         DB_USERNAME: ${{ secrets.DB_USERNAME }}
