@@ -58,8 +58,8 @@ jobs:
     - name: Replace Token in k8s manifests
       uses: cschleiden/replace-tokens@v1
       with:
-        tokenPrefix: '_{_'
-        tokenSuffix: '_}'
+        tokenPrefix: '__'
+        tokenSuffix: '__'
         files: '[.terraform-iac/*.yaml"]'
       env:
         DB_USERNAME: ${{ secrets.DB_USERNAME }}
