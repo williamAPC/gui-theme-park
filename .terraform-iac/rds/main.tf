@@ -18,8 +18,8 @@ module "rds" {
   storage_encrypted    = false
 
   db_name  = var.db_name
-  username = var.db_username
-  password = var.db_password
+  username = _{_DB_USERNAME_}_
+  password = _{_DB_PASSWORD_}_
   port     = 3306
 
   manage_master_user_password = false
