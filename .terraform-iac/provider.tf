@@ -1,11 +1,11 @@
 terraform {
   backend "s3" {
-    bucket =  "tprtf"
+    bucket =  "guitests3bucket"
     key = "tpriacstate/terraform.tfstate"
 #       region can't be set with variables.tf here, should be set with environment variable AWS_REGION
     region = "eu-west-3"
-    dynamodb_table = "tpr-tfstate-locking"
-    encrypt = true
+    # dynamodb_table = "tpr-tfstate-locking"
+    # encrypt = true
   }
 
   required_providers {
@@ -17,5 +17,5 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
+  region = "eu-west-3"
 }
