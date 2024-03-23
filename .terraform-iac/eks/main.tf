@@ -26,7 +26,7 @@ resource "aws_iam_policy" "example" {
             "Resource": "*"
         }
     ]
-}
+})
 }
 
 resource "aws_iam_role_policy_attachment" "example" {
