@@ -50,8 +50,8 @@ jobs:
         tokenSuffix: '__'
         files: '["terraform-iac/*.tf"]'
       env:
-        DB_USERNAME: ${{ secrets.DBUSERNAME }}
-        DB_PASSWORD: ${{ secrets.DBPASSWORD }}
+        DB_USERNAME: ${{ vars.DBUSERNAME }}
+        DB_PASSWORD: ${{ vars.DBPASSWORD }}
 
 
     - name: Terraform Plan
