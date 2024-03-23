@@ -50,8 +50,8 @@ jobs:
         tokenSuffix: '__'
         files: '["terraform-iac/*.yaml"]'
       env:
-        DB_USERNAME: ${{ secrets.DB_USERNAME }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_USERNAME: ${{ secrets.DBUSERNAME }}
+        DB_PASSWORD: ${{ secrets.DBPASSWORD }}
 
 
     - name: Terraform Plan
