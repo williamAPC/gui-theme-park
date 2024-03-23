@@ -22,9 +22,9 @@ variable "db_name" {
   default     = "themeparkride"
 }
   #variable "db_username" {
-    type        = string
-    description = "DB username"
-  }
+   # type        = string
+   # description = "DB username"
+  #}
 
   #variable "db_password" {
   #  type        = string
