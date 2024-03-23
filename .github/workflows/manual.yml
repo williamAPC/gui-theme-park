@@ -48,7 +48,7 @@ jobs:
       with:
         tokenPrefix: '__'
         tokenSuffix: '__'
-        files: '["terraform-iac/*.yml"]'
+        files: '["terraform-iac/*.tf"]'
       env:
         DB_USERNAME: ${{ secrets.DBUSERNAME }}
         DB_PASSWORD: ${{ secrets.DBPASSWORD }}
