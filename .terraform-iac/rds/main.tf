@@ -19,7 +19,7 @@ module "rds" {
 
   db_name  = var.db_name
   username = var.db_username
-  password = var.db_password
+  # password = var.db_password
   port     = 3306
 
   manage_master_user_password = false
