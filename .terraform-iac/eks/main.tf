@@ -14,9 +14,11 @@ resource "aws_iam_user" "example" {
 }
 
 resource "aws_iam_policy" "example" {
-  name        = "example_policy"
+  
   description = "An example policy"
-
+  count = length(var.iam_list)
+  name        = "example_policy"
+  user = element(var.iam_list, count.index)
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -29,8 +31,8 @@ resource "aws_iam_policy" "example" {
 })
 }
 
-resource "aws_iam_role_policy_attachment" "example" {
-  role       = aws_iam_user.example[name]
+resource "aws_iam_user_policy_attachment" "example" {
+  user       = aws_iam_user.name[]
   policy_arn = aws_iam_policy.example.arn
 }
 
