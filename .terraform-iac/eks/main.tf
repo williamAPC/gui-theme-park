@@ -8,6 +8,33 @@ provider "kubernetes" {
   token                  = data.aws_eks_cluster_auth.default.token
 }
 
+resource "aws_iam_user" "example" {
+  for_each = toset(["terusertest", "github_deploy", "william"])
+  name     = each.value
+}
+
+resource "aws_iam_policy" "example" {
+  name        = "example_policy"
+  description = "An example policy"
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "*",
+            "Resource": "*"
+        }
+    ]
+}
+}
+
+resource "aws_iam_role_policy_attachment" "example" {
+  role       = aws_iam_role.example.name
+  policy_arn = aws_iam_policy.example.arn
+}
+
+
 locals {  
   list_aws_auth_user = [
     for iam_user in var.iam_list:
