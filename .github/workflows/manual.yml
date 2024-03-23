@@ -52,6 +52,10 @@ jobs:
       env:
         DBUSERNAME: ${{ secrets.DBUSERNAME }}
         DBPASSWORD: ${{ secrets.DBPASSWORD }}
+    
+    - name: check files
+      run: |
+         cat terraform-iac/*.tf
 
 
     - name: Terraform Plan
