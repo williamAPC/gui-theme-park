@@ -26,8 +26,8 @@ module "rds" {
   app          = var.app
   vpc_id       = module.network.vpc_id
   db_name      = var.db_name
-  db_username  = DB_USERNAME
-  db_password  = DB_PASSWORD
+  db_username  = DBUSERNAME
+  db_password  = DBPASSWORD
   private_nets = module.network.private_nets
   public_subnets  = var.public_subnets
 }
