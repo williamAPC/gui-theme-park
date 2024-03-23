@@ -50,10 +50,11 @@ jobs:
         tokenSuffix: '__'
         files: '["terraform-iac/*.tf"]'
       env:
-        DBUSERNAME: ${{ secrets.DBUSERNAME }}
-        DBPASSWORD: ${{ secrets.DBPASSWORD }}
+        DBUSERNAME: ${{ vars.DBUSERNAME }}
+        DBPASSWORD: ${{ vars.DBPASSWORD }}
     
     - name: check files
+      continue-on-error: true
       run: |
          cat terraform-iac/*.tf
 
