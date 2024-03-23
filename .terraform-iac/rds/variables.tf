@@ -20,11 +20,13 @@ variable "db_name" {
 
 variable "db_username" {
   type = string
+  default = __DBUSERNAME__
 }
 
 variable "db_password" {
  type      = string
-  sensitive = true
+ default = __DBPASSWORD__
+ sensitive = true
 }
 
 variable "vpc_id" {
