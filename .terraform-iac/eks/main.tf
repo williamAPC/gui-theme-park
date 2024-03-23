@@ -29,7 +29,7 @@ resource "aws_iam_policy" "example" {
 }
 
 resource "aws_iam_user_policy_attachment" "example" {
-  user       = aws_iam_user.example[count.index]
+  user       = aws_iam_user.example[count.name
   policy_arn = aws_iam_policy.example.arn
 }
 
