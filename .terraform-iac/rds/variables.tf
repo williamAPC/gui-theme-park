@@ -22,7 +22,7 @@ variable "db_username" {
   type = string
 }
 
-ariable "db_password" {
+variable "db_password" {
  type      = string
   sensitive = true
 }
