@@ -29,7 +29,7 @@ resource "aws_iam_policy" "example" {
 }
 
 resource "aws_iam_user_policy_attachment" "example" {
-  user       = iam_list.key
+  user       = var.iam_list.key
   policy_arn = aws_iam_policy.example.arn
 }
 
