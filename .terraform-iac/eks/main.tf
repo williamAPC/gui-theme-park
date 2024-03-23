@@ -16,9 +16,6 @@ resource "aws_iam_user" "example" {
 resource "aws_iam_policy" "example" {
   
   description = "An example policy"
-  count = length(var.iam_list)
-  name        = "example_policy"
-  user = element(var.iam_list, count.index)
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
