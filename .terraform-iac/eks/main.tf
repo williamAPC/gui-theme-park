@@ -38,7 +38,7 @@ resource "aws_iam_user_policy_attachment" "example" {
   policy_arn = aws_iam_policy.example.arn
 }
 
-resource "aws_iam_user_policy_attachment" "example" {
+resource "aws_iam_user_policy_attachment" "example2" {
   user       = aws_iam_user.example2.name
   policy_arn = aws_iam_policy.example.arn
 }
