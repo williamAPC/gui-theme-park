@@ -8,10 +8,10 @@ provider "kubernetes" {
   token                  = data.aws_eks_cluster_auth.default.token
 }
 
-#resource "aws_iam_user" "example" {
- # for_each = toset(var.iam_list)
- # name     = each.value
-#}
+resource "aws_iam_user" "example" {
+  for_each = toset(var.iam_list)
+  name     = each.value
+}
 
 resource "aws_iam_policy" "example" {
   
@@ -29,7 +29,7 @@ resource "aws_iam_policy" "example" {
 }
 
 resource "aws_iam_user_policy_attachment" "example" {
-  user       = var.iam_list.key
+  user       = aws_iam_user.example.name
   policy_arn = aws_iam_policy.example.arn
 }
 
