@@ -9,13 +9,18 @@ provider "kubernetes" {
 }
 
 resource "aws_iam_user" "example" {
-  count = length(var.iam_list)
-  name = var.iam_list[count.index]
+  #count = length(var.iam_list)
+  #name = var.iam_list[count.index]
+  name = "terusertest"
+}
+
+resource "aws_iam_user" "example2" {
+  name = "github_deploy"
 }
 
 resource "aws_iam_policy" "example" {
   
-  description = "An example policy"
+  description = "Access full access"
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -33,6 +38,10 @@ resource "aws_iam_user_policy_attachment" "example" {
   policy_arn = aws_iam_policy.example.arn
 }
 
+resource "aws_iam_user_policy_attachment" "example" {
+  user       = aws_iam_user.example2.name
+  policy_arn = aws_iam_policy.example.arn
+}
 
 locals {  
   list_aws_auth_user = [
