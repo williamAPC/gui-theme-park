@@ -9,7 +9,7 @@ provider "kubernetes" {
 }
 
 resource "aws_iam_user" "example" {
-  for_each = toset(["terusertest", "github_deploy", "william"])
+  for_each = toset(["terusertest", "github_deploy"])
   name     = each.value
 }
 
@@ -29,7 +29,7 @@ resource "aws_iam_policy" "example" {
 }
 
 resource "aws_iam_user_policy_attachment" "example" {
-  user       = aws_iam_user.example.name
+  user       = aws_iam_user.example.[each.key]
   policy_arn = aws_iam_policy.example.arn
 }
 
