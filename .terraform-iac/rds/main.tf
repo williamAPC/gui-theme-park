@@ -2,7 +2,7 @@
 resource "aws_db_subnet_group" "mariadb-subnets" {
     name        = "mariadb-subnets"
     description = "Amazon RDS subnet group"
-    subnet_ids  = [var.public_subnets[0]]
+    subnet_ids  = module.vpc.public_subnets
 }
 
 #RDS Parameters
@@ -22,11 +22,11 @@ resource "aws_db_instance"  "tpr-mariadb" {
 
   engine               = var.engine
   engine_version       = var.engine_version
-  major_engine_version = var.major_engine_version
-  family               = var.family
+  #major_engine_version = var.major_engine_version
+  #family               = var.family
   instance_class       = var.instance_class
   allocated_storage    = var.allocated_storage
-  multi_az             = false
+  multi_az             = "false"
   #en production, activer la protection contre la suppression
   deletion_protection  = false
   #en production, activer la sauvegarde par snapshot avant la destruction de la BD
@@ -50,7 +50,7 @@ resource "aws_db_instance"  "tpr-mariadb" {
  # db_subnet_group_use_name_prefix = false
  # subnet_ids                      = var.public_subnets
 
-  create_db_parameter_group = false
+  #create_db_parameter_group = false
 
   tags = {
     app       = "${var.app}"
@@ -58,16 +58,23 @@ resource "aws_db_instance"  "tpr-mariadb" {
   }
 }
 
-module "rds_sg" {
-  source = "terraform-aws-modules/security-group/aws"
+resource "aws_security_group" "rds_sg" {
+  
+ egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-  name        = "rds_sg"
-  description = "Security group for RDS"
-  vpc_id      = var.vpc_id
-
-  ingress_cidr_blocks = var.public_subnets
-  ingress_rules       = ["mysql-tcp"]
-
-  egress_cidr_blocks = ["0.0.0.0/0"]
-  egress_rules       = ["all-all"]
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    security_groups = [aws_security_group.allow-levelup-ssh.id]
+  }
+  
+  tags = {
+    Name = "allow-mariadb"
+  }
 }
