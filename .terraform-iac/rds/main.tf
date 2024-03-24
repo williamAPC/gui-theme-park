@@ -1,6 +1,26 @@
 module "rds" {
   source = "terraform-aws-modules/rds/aws"
 
+
+  resource "aws_db_subnet_group" "mariadb-subnets" {
+  name        = "mariadb-subnets"
+  description = "Amazon RDS subnet group"
+  subnet_ids  = [var.public_subnets[0].id]
+}
+
+#RDS Parameters
+resource "aws_db_parameter_group" "tpr-mariadb-parameters" {
+  name        = "tpr-mariadb-parameters"
+  family      = "mariadb10.4"
+  description = "MariaDB parameter group"
+
+  parameter {
+    name  = "max_allowed_packet"
+    value = "16777216"
+  }
+}
+
+
   identifier = "${var.app}-db"
 
   engine               = var.engine
@@ -19,18 +39,19 @@ module "rds" {
 
   db_name  = var.db_name
   username = var.db_username
-  # password = var.db_password
+  password = var.db_password
   port     = 3306
 
   manage_master_user_password = false
 
   vpc_security_group_ids = [module.rds_sg.security_group_id]
 
-  create_db_subnet_group = true
-  db_subnet_group_name   = "${var.app}_db_subnet_group"
+  #create_db_subnet_group = true
+  db_subnet_group_name   = aws_db_subnet_group.mariadb-subnets.name
+  parameter_group_name    = aws_db_parameter_group.tpr-mariadb-parameters.name
   # desactivation du name prefix qui ne fonctionne pas
-  db_subnet_group_use_name_prefix = false
-  subnet_ids                      = var.private_nets
+ # db_subnet_group_use_name_prefix = false
+  subnet_ids                      = var.public_subnets
 
   create_db_parameter_group = false
 

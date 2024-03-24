@@ -8,40 +8,40 @@ provider "kubernetes" {
   token                  = data.aws_eks_cluster_auth.default.token
 }
 
-resource "aws_iam_user" "example" {
+#resource "aws_iam_user" "example" {
   #count = length(var.iam_list)
   #name = var.iam_list[count.index]
-  name = "terusertest"
-}
+ # name = "terusertest"
+#}
+#
+#resource "aws_iam_user" "example2" {
+ # name = "github_deploy"
+#}
 
-resource "aws_iam_user" "example2" {
-  name = "github_deploy"
-}
+#resource "aws_iam_policy" "example" {
+ # 
+ # description = "Access full access"
+#  policy = jsonencode({
+ #   "Version": "2012-10-17",
+ #   "Statement": [
+ #       {
+   #         "Effect": "Allow",
+  #          "Action": "*",
+  #          "Resource": "*"
+  #      }
+  #  ]
+#})
+#}
 
-resource "aws_iam_policy" "example" {
-  
-  description = "Access full access"
-  policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "*",
-            "Resource": "*"
-        }
-    ]
-})
-}
+#resource "aws_iam_user_policy_attachment" "example" {
+#  user       = aws_iam_user.example.name
+ # policy_arn = aws_iam_policy.example.arn
+#}
 
-resource "aws_iam_user_policy_attachment" "example" {
-  user       = aws_iam_user.example.name
-  policy_arn = aws_iam_policy.example.arn
-}
-
-resource "aws_iam_user_policy_attachment" "example2" {
-  user       = aws_iam_user.example2.name
-  policy_arn = aws_iam_policy.example.arn
-}
+#resource "aws_iam_user_policy_attachment" "example2" {
+ # user       = aws_iam_user.example2.name
+#  policy_arn = aws_iam_policy.example.arn
+#}
 
 locals {  
   list_aws_auth_user = [

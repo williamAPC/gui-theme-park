@@ -1,10 +1,10 @@
 terraform {
-  cloud {
-    organization = "GuillaumeHenriOrg"
-    workspaces {
-       name = "my-demo-test"
-    }
-  }
+  #cloud {
+  #  organization = "GuillaumeHenriOrg"
+  #  workspaces {
+  #     name = "my-demo-test"
+  #  }
+  #}
 
   required_providers {
     aws = {
