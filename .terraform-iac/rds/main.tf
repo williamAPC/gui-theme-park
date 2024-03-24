@@ -2,7 +2,7 @@
 resource "aws_db_subnet_group" "mariadb-subnets" {
     name        = "mariadb-subnets"
     description = "Amazon RDS subnet group"
-    subnet_ids  = [var.public_subnets[0].id]
+    subnet_ids  = var.public_subnets[0].id
 }
 
 #RDS Parameters
@@ -41,14 +41,14 @@ resource "aws_db_instance"  "tpr-mariadb" {
 
   manage_master_user_password = false
 
-  vpc_security_group_ids = [module.rds_sg.security_group_id]
+  vpc_security_group_ids = [module.rds_sg.security_group.id]
 
   #create_db_subnet_group = true
   db_subnet_group_name   = aws_db_subnet_group.mariadb-subnets.name
   parameter_group_name    = aws_db_parameter_group.tpr-mariadb-parameters.name
   # desactivation du name prefix qui ne fonctionne pas
  # db_subnet_group_use_name_prefix = false
-  subnet_ids                      = var.public_subnets
+ # subnet_ids                      = var.public_subnets
 
   create_db_parameter_group = false
 

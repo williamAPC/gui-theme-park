@@ -67,3 +67,9 @@ variable "allocated_storage" {
   description = "allocated storage of database engine"
   default     = 5
 }
+
+variable "public_subnets" {
+  type        = list(string)
+  description = "Public subnets"
+  default     = ["10.0.0.0/18", "10.0.64.0/18"]
+}
