@@ -1,15 +1,12 @@
-module "rds" {
-  source = "terraform-aws-modules/rds/aws"
 
-
- resource "aws_db_subnet_group" "mariadb-subnets" {
+resource "aws_db_subnet_group" "mariadb-subnets" {
     name        = "mariadb-subnets"
     description = "Amazon RDS subnet group"
     subnet_ids  = [var.public_subnets[0].id]
 }
 
 #RDS Parameters
-  resource "aws_db_parameter_group" "tpr-mariadb-parameters" {
+resource "aws_db_parameter_group" "tpr-mariadb-parameters" {
     name        = "tpr-mariadb-parameters"
     family      = "mariadb10.4"
     description = "MariaDB parameter group"
@@ -20,7 +17,7 @@ module "rds" {
   }
 }
 
-
+resource "aws_db_instance"  "tpr-mariadb {
   identifier = "${var.app}-db"
 
   engine               = var.engine
