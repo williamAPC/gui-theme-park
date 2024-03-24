@@ -41,7 +41,7 @@ resource "aws_db_instance"  "tpr-mariadb" {
 
   manage_master_user_password = false
 
-  vpc_security_group_ids = [module.rds_sg.security_group.id]
+  vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
   #create_db_subnet_group = true
   db_subnet_group_name   = aws_db_subnet_group.mariadb-subnets.name
