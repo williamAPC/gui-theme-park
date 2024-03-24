@@ -2,21 +2,21 @@ module "rds" {
   source = "terraform-aws-modules/rds/aws"
 
 
-  resource "aws_db_subnet_group" "mariadb-subnets" {
-  name        = "mariadb-subnets"
-  description = "Amazon RDS subnet group"
-  subnet_ids  = [var.public_subnets[0].id]
+ resource "aws_db_subnet_group" "mariadb-subnets" {
+    name        = "mariadb-subnets"
+    description = "Amazon RDS subnet group"
+    subnet_ids  = [var.public_subnets[0].id]
 }
 
 #RDS Parameters
-resource "aws_db_parameter_group" "tpr-mariadb-parameters" {
-  name        = "tpr-mariadb-parameters"
-  family      = "mariadb10.4"
-  description = "MariaDB parameter group"
+  resource "aws_db_parameter_group" "tpr-mariadb-parameters" {
+    name        = "tpr-mariadb-parameters"
+    family      = "mariadb10.4"
+    description = "MariaDB parameter group"
 
-  parameter {
-    name  = "max_allowed_packet"
-    value = "16777216"
+    parameter {
+      name  = "max_allowed_packet"
+      value = "16777216"
   }
 }
 
