@@ -17,7 +17,7 @@ resource "aws_db_parameter_group" "tpr-mariadb-parameters" {
   }
 }
 
-resource "aws_db_instance"  "tpr-mariadb {
+resource "aws_db_instance"  "tpr-mariadb" {
   identifier = "${var.app}-db"
 
   engine               = var.engine
