@@ -39,7 +39,7 @@ resource "aws_db_instance"  "tpr-mariadb" {
   password = var.db_password
   port     = 3306
 
-  manage_master_user_password = false
+  #manage_master_user_password = false
 
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
