@@ -45,7 +45,11 @@ resource "aws_security_group" "rds_sg" {
 #   
 #}
 */
-resource "aws_db_instance"  "tpr-mariadb" {
+#resource "aws_db_instance"  "tpr-mariadb" {
+
+module "rds" {
+  source = "terraform-aws-modules/rds/aws"
+
   identifier = "${var.app}-db"
 
   engine               = var.engine
