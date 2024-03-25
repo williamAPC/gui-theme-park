@@ -2,7 +2,7 @@ module "EKS" {
   source               = "./eks"
   app                  = var.app
   vpc_id               = module.network.vpc_id
-  public_subnets          = module.network.public_subnet
+  public_nets          = module.network.public_nets
   instance_types       = var.instance_types
   ami_type             = var.ami_type
   account_id           = var.account_id
@@ -28,6 +28,6 @@ module "rds" {
   db_name      = var.db_name
   db_username  = var.db_username
   db_password  = var.db_password
-  private_nets = module.network.private_subnets
+  private_nets = module.network.private_nets
   public_subnets  = var.public_subnets
 }
