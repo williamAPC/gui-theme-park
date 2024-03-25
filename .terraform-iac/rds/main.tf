@@ -1,13 +1,13 @@
 
-
-module "vpc" {
+/*
+module "net" {
   source = "../network"
-}
+}*/
 
 resource "aws_db_subnet_group" "mariadb-subnets" {
     name        = "mariadb-subnets"
     description = "Amazon RDS subnet group"
-    subnet_ids  = module.vpc.private_subnets_ids
+    subnet_ids  = module.vpc.private_nets_ids
 }
 
 

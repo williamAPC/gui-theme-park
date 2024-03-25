@@ -14,6 +14,9 @@ module "vpc" {
   create_igw              = true
   enable_nat_gateway      = false
   map_public_ip_on_launch = true
+  create_database_subnet_group           = true
+  create_database_subnet_route_table     = true
+  create_database_internet_gateway_route = true
 
   tags = {
     app       = "${var.app}"
