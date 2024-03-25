@@ -48,6 +48,10 @@ resource "aws_security_group" "rds_sg" {
 module "rds" {
   source = "terraform-aws-modules/rds/aws"
 
+  module "net" {
+    source = "../network"
+  
+
   identifier = "${var.app}-db"
 
   engine               = var.engine
@@ -89,6 +93,5 @@ module "rds" {
 
 
   create_db_parameter_group = false
-
-  
+  }
 }
