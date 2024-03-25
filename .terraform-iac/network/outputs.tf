@@ -7,18 +7,13 @@ output "public_nets" {
   description = "List of IDs of public subnets"
   value       = module.vpc.public_subnets
 }
-/*
-output "private_nets" {
-  description = "List of IDs of private subnets"
-  value       = module.vpc.private_subnets
-}
-*/
-output "private_subnets_ids" {
+
+output "private_subnets" {
   description = "List of IDs of private subnets"
   value       = module.vpc.private_subnets
 }
 
-output "vpc_cidr" {
-  description = "VPC ID"
-  value       = module.vpc.cidr_id
+output "private_subnets_ids" {
+  description = "List of IDs of private subnets"
+  value       = module.vpc.private_subnets
 }

@@ -18,12 +18,3 @@ variable "private_subnets" {
 variable "public_subnets" {
   type = list(string)
 }
-
-/*
-variable "private_subnets2" {
-  type = string
-}
-
-variable "public_subnets2" {
-  type = string
-}*/
