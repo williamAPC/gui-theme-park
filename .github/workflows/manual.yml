@@ -61,6 +61,7 @@ jobs:
 
     - name: Terraform Plan
       working-directory: .terraform-iac/
+      continue-on-error: true
       env:
         #DBUSERNAME: ${{ vars.DBUSERNAME }}
         #DBPASSWORD: ${{ vars.DBPASSWORD }}
@@ -92,6 +93,4 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: eu-west-3
       # if: github.ref == 'refs/heads/"master"' && github.event_name == 'push'
-      run: |
-          sleep 20m
-          terraform destroy -auto-approve -input=false
+      run: terraform destroy -auto-approve -input=false

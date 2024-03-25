@@ -47,9 +47,9 @@ resource "aws_security_group" "rds_sg" {
 
 module "rds" {
   source = "terraform-aws-modules/rds/aws"
+  version = "6.5.4"
 
-  module "net" {
-    source = "../network"
+ 
   
 
   identifier = "${var.app}-db"
@@ -58,21 +58,22 @@ module "rds" {
   engine_version       = var.engine_version
   instance_class       = var.instance_class
   allocated_storage    = var.allocated_storage
-  #identifier           = "mariadb"
+  identifier           = "mariadb"
   username = var.db_username
   password = var.db_password
   port     = 3306
   #db_subnet_group_name   = aws_db_subnet_group.mariadb-subnets.name
   #parameter_group_name    = aws_db_parameter_group.tpr-mariadb-parameters.name
   multi_az             = "false"
-  vpc_security_group_ids = [aws_rds_sg.security_group.id]
+  vpc_security_group_ids = [aws_rds_sg.security_group.name]
   create_db_subnet_group = true
   db_subnet_group_use_name_prefix = false
-  subnet_ids                      = var.private_subnets
+  #subnet_ids                      = tolist(data.aws_subnet_ids.selected.ids)
+  subnet_ids                       = values(aws_subnet.private)[*].id
   #en production, activer la protection contre la suppression
   deletion_protection  = false
   #en production, activer la sauvegarde par snapshot avant la destruction de la BD
-  availability_zone   = ["eu-west-3a", "eu-west-3b"]
+  availability_zone   = "eu-west-3a"
   skip_final_snapshot = true
   
   storage_encrypted    = false
@@ -93,5 +94,5 @@ module "rds" {
 
 
   create_db_parameter_group = false
-  }
+
 }
