@@ -38,14 +38,16 @@ jobs:
       continue-on-error: true
       run: terraform init
 
-    /*
+    
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       working-directory: .terraform-iac/
+      continue-on-error: true
       run: terraform fmt
 
     # Generates an execution plan for Terraform
     - name: Replace Token in k8s manifests
+      continue-on-error: true
       uses: cschleiden/replace-tokens@v1
       with:
         tokenPrefix: '__'
@@ -59,7 +61,6 @@ jobs:
       continue-on-error: true
       run: |
          cat .terraform-iac/*.tf
-     */
 
     - name: Terraform Plan
       working-directory: .terraform-iac/
