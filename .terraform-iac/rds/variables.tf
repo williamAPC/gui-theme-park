@@ -1,19 +1,22 @@
 variable "aws_region" {
   type        = string
+  default     = "eu-west-3"
 }
 
 variable "app" {
   type        = string
+  description = "App name"
+  default     = "tpr"
 }
-
+/*
 variable "private_subnets" {
   type = list(string)
-}
+}*/
 
-
+/*
 variable "public_subnets" {
   type = list(string)
-}
+}*/
 
 variable "db_name" {
   type = string
@@ -68,18 +71,18 @@ variable "allocated_storage" {
   description = "allocated storage of database engine"
   default     = 5
 }
-/*
+
 variable "public_subnets" {
   type        = list(string)
   description = "Public subnets"
   default     = ["10.0.0.0/18", "10.0.64.0/18"]
-}*/
-/*
+}
+
 variable "private_subnets" {
   type        = list(string)
   description = "Privatesubnets"
  # default     = ["10.0.128.0/18", "10.0.192.0/18"]
-}*/
+}
 
 
 /*
