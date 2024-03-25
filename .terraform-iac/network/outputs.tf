@@ -17,13 +17,3 @@ output "private_sunets_ids" {
   description = "List of IDs of private subnets"
   value       = module.vpc.private_subnets
 }
-
-output "cidr" {
-  description = "List of IDs subnets"
-  value       = module.vpc.cidr
-}
-
-output "azs" {
-  description = "List of IDs of private subnets"
-  value       = module.vpc.azs
-}
