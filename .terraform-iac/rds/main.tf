@@ -2,7 +2,7 @@
 resource "aws_db_subnet_group" "mariadb-subnets" {
     name        = "mariadb-subnets"
     description = "Amazon RDS subnet group"
-    subnet_ids  = [var.public_subnets[0], var.public_subnets[1]]
+    subnet_ids  = [var.private_subnets[0], var.privatesubnets[1]]
 }
 
 
@@ -53,6 +53,7 @@ resource "aws_db_instance"  "tpr-mariadb" {
   #en production, activer la protection contre la suppression
   deletion_protection  = false
   #en production, activer la sauvegarde par snapshot avant la destruction de la BD
+  availability_zone   = "eu-west-3a"
   skip_final_snapshot = true
   
   storage_encrypted    = false
