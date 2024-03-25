@@ -22,8 +22,3 @@ output "vpc_cidr" {
   description = "VPC ID"
   value       = module.vpc.cidr_id
 }
-
-output "vpc_cidr" {
-  description = "VPC ID"
-  value       = module.vpc.cidr_id
-}
