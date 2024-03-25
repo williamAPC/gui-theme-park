@@ -1,9 +1,13 @@
 variable "aws_region" {
-  type = string
+  type        = string
+  description = "Region AWS"
+  default     = "eu-west-3"
 }
 
 variable "app" {
+  type        = string
   description = "App name"
+  default     = "tpr"
 }
 
 variable "private_nets" {
