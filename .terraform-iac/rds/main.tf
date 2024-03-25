@@ -1,8 +1,8 @@
 
 
-#module "vpc" {
- # source = "../network"
-#}
+module "vpc" {
+  source = "../network"
+}
 
 resource "aws_db_subnet_group" "mariadb-subnets" {
     name        = "mariadb-subnets"
