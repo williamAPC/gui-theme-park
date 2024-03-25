@@ -1,5 +1,5 @@
 # recupère dynamiquement les zones de disponibilités
-#data "aws_availability_zones" "available" {}
+data "aws_availability_zones" "available" {}
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
@@ -7,10 +7,10 @@ module "vpc" {
 
   name = "${var.app}-VPC"
 
-  cidr                    = "10.0.0.0/16"
-  azs                     = ["eu-west-3a", "eu-west-3b", "eu-west-3c"]
-  private_subnets         = ["10.0.128.0/18", "10.0.192.0/18"]
-  public_subnets          = ["10.0.0.0/18", "10.0.64.0/18"]
+  cidr                    = var.vpc_cidr
+  azs                     = data.aws_availability_zones.available.names
+  private_subnets         = var.private_subnets
+  public_subnets          = var.public_subnets
   create_igw              = true
   enable_nat_gateway      = false
   map_public_ip_on_launch = true
