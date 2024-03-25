@@ -21,3 +21,13 @@ output "public_subnets_ids" {
   description = "List of IDs of private subnets"
   value       = module.vpc.public_subnets
 }
+
+output "cidr" {
+  description = "List of IDs of private subnets"
+  value       = module.vpc.cidr
+}
+
+output "azs" {
+  description = "List of IDs of private subnets"
+  value       = module.vpc.azs
+}
