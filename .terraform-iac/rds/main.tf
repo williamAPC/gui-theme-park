@@ -1,7 +1,7 @@
 
 
 module "net" {
-  source = "./.terraform-iac/network"
+  source = "./network"
 }
 
 resource "aws_db_subnet_group" "mariadb-subnets" {
