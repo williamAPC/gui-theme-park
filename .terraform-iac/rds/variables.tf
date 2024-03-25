@@ -1,13 +1,9 @@
 variable "aws_region" {
   type        = string
-  description = "Region AWS"
-  default     = "eu-west-3"
 }
 
 variable "app" {
   type        = string
-  description = "App name"
-  default     = "tpr"
 }
 
 variable "private_nets" {
@@ -71,7 +67,7 @@ variable "allocated_storage" {
   description = "allocated storage of database engine"
   default     = 5
 }
-
+/*
 variable "public_subnets" {
   type        = list(string)
   description = "Public subnets"
@@ -84,7 +80,7 @@ variable "private_subnets" {
  # default     = ["10.0.128.0/18", "10.0.192.0/18"]
 }
 
-/*
+
 
 variable "private_subnets" {
   type        = string

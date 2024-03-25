@@ -1,5 +1,5 @@
 
-
+/*
 module "net" {
   source = "../network"
 }
@@ -44,7 +44,7 @@ resource "aws_security_group" "rds_sg" {
 #} 
 #   
 #}
-
+*/
 resource "aws_db_instance"  "tpr-mariadb" {
   identifier = "${var.app}-db"
 
