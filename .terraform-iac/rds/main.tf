@@ -3,12 +3,12 @@
 module "net" {
   source = "../network"
 }*/
-/*
+
 resource "aws_db_subnet_group" "mariadb-subnets" {
     name        = "mariadb-subnets"
     description = "Amazon RDS subnet group"
     subnet_ids  = [module.vpc.private_subnets.ids]
-}*/
+}
 
 
 resource "aws_security_group" "rds_sg" {
@@ -56,7 +56,7 @@ resource "aws_db_instance"  "tpr-mariadb" {
   username = var.db_username
   password = var.db_password
   port     = 3306
-  #db_subnet_group_name   = aws_db_subnet_group.mariadb-subnets.name
+  db_subnet_group_name   = aws_db_subnet_group.mariadb-subnets.name
   #parameter_group_name    = aws_db_parameter_group.tpr-mariadb-parameters.name
   multi_az             = "false"
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
