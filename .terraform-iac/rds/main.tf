@@ -66,7 +66,7 @@ module "rds" {
   vpc_security_group_ids = [aws_rds_sg.security_group.id]
   create_db_subnet_group = true
   db_subnet_group_use_name_prefix = false
-  subnet_ids                      = var.private_nets
+  subnet_ids                      = var.private_subnets
   #en production, activer la protection contre la suppression
   deletion_protection  = false
   #en production, activer la sauvegarde par snapshot avant la destruction de la BD
