@@ -57,7 +57,7 @@ resource "aws_db_instance"  "tpr-mariadb" {
   password = var.db_password
   port     = 3306
   db_subnet_group_name   = aws_db_subnet_group.mariadb-subnets.name
-  parameter_group_name    = aws_db_parameter_group.tpr-mariadb-parameters.name
+  #parameter_group_name    = aws_db_parameter_group.tpr-mariadb-parameters.name
   multi_az             = "false"
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
   #en production, activer la protection contre la suppression
