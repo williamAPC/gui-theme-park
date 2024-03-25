@@ -28,6 +28,6 @@ module "rds" {
   db_name      = var.db_name
   db_username  = var.db_username
   db_password  = var.db_password
-  private_subnets = module.network.private_nets
+  private_nets = module.network.private_nets
   public_subnets  = var.public_subnets
 }
