@@ -1,6 +1,6 @@
 
 module "net" {
-  source = "../../network"
+  source = "./../network"
 }
 
 resource "aws_db_subnet_group" "mariadb-subnets" {
@@ -30,7 +30,7 @@ resource "aws_security_group" "rds_sg" {
     Name = "allow-mariadb"
   }
 }
-
+/*
 ##RDS Parameters
 #resource "aws_db_parameter_group" "tpr-mariadb-parameters" {
 #    name        = "tpr-mariadb-parameters"
