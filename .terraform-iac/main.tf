@@ -13,9 +13,9 @@ module "EKS" {
 
 module "network" {
   source          = "./network"
-  vpc_cidr        = var.vpc_cidr
+  #vpc_cidr        = var.vpc_cidr
   app             = var.app
-  aws_region      = var.aws_region
+  #aws_region      = var.aws_region
   private_subnets = var.private_subnets
   public_subnets  = var.public_subnets
 }
