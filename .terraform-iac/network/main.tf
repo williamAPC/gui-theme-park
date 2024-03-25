@@ -7,7 +7,7 @@ module "vpc" {
 
   name = "${var.app}-VPC"
 
-  vpc_cidr                = "10.0.0.0/16"
+  cidr                = "10.0.0.0/16"
   azs                     = ["eu-west-3a", "eu-west-3b", "eu-west-3c"]
   private_subnets         = ["10.0.128.0/18", "10.0.192.0/18"]
   public_subnets          = ["10.0.0.0/18", "10.0.64.0/18"]
