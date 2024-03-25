@@ -47,7 +47,7 @@ resource "aws_db_instance"  "tpr-mariadb" {
   engine_version       = var.engine_version
   instance_class       = var.instance_class
   allocated_storage    = var.allocated_storage
-  identifier           = "mariadb"
+  #identifier           = "mariadb"
   username = var.db_username
   password = var.db_password
   port     = 3306
