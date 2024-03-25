@@ -5,11 +5,11 @@ variable "aws_region" {
 variable "app" {
   type        = string
 }
-
+/*
 variable "private_nets" {
   type = list(string)
 }
-
+*/
 #variable "public_subnets" {
 #  type = list(string)
 #}
