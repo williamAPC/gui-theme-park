@@ -75,13 +75,13 @@ variable "public_subnets" {
 }
 
 variable "private_subnets1" {
-  type        = (string)
+  type        = string
   description = "Private subnets1"
   default     = "10.0.128.0/18"
 }
 
 variable "private_subnets2" {
-  type        = list(string)
+  type        = string
   description = "Private subnets2"
   default     = "10.0.192.0/18"
 }
