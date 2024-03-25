@@ -67,7 +67,7 @@ variable "allocated_storage" {
   description = "allocated storage of database engine"
   default     = 5
 }
-/*
+
 variable "public_subnets" {
   type        = list(string)
   description = "Public subnets"
@@ -81,7 +81,7 @@ variable "private_subnets" {
 }
 
 
-
+/*
 variable "private_subnets" {
   type        = string
   description = "Private subnets1"
