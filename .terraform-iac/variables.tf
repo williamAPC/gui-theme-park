@@ -36,30 +36,6 @@ variable "vpc_cidr" {
   description = "VPC CIDR"
   default     = "10.0.0.0/16"
 }
-/*
-variable "private_subnets1" {
-  type = string
-  default     = "10.0.128.0/18"
-}
-
-variable "public_subnets1" {
-  type = string
-  default     = "10.0.0.0/18"
-}
-
-
-variable "private_subnets2" {
-  type = string
-  default     = "10.0.192.0/18"
-}
-
-variable "public_subnets2" {
-  type = string
-  default     = "10.0.64.0/18"
-}
-*/
-
-
 
 variable "private_subnets" {
   type        = list(string)
