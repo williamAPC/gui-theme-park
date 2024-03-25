@@ -1,7 +1,7 @@
 
 /*
 module "net" {
-  source = "../network"
+  source = "../../network"
 }
 
 resource "aws_db_subnet_group" "mariadb-subnets" {
@@ -60,14 +60,17 @@ module "rds" {
   username = var.db_username
   password = var.db_password
   port     = 3306
-  db_subnet_group_name   = aws_db_subnet_group.mariadb-subnets.name
+  #db_subnet_group_name   = aws_db_subnet_group.mariadb-subnets.name
   #parameter_group_name    = aws_db_parameter_group.tpr-mariadb-parameters.name
   multi_az             = "false"
-  vpc_security_group_ids = [aws_security_group.rds_sg.id]
+  vpc_security_group_ids = [aws_rds_sg.security_group.id]
+  create_db_subnet_group = true
+  db_subnet_group_use_name_prefix = false
+  subnet_ids                      = var.private_nets
   #en production, activer la protection contre la suppression
   deletion_protection  = false
   #en production, activer la sauvegarde par snapshot avant la destruction de la BD
-  availability_zone   = "eu-west-3a"
+  availability_zone   = ["eu-west-3a", "eu-west-3b"]
   skip_final_snapshot = true
   
   storage_encrypted    = false
@@ -82,13 +85,12 @@ module "rds" {
 
   #manage_master_user_password = false
 
-  #create_db_subnet_group = true
+ 
   
   # desactivation du name prefix qui ne fonctionne pas
- # db_subnet_group_use_name_prefix = false
- # subnet_ids                      = var.public_subnets
 
-  #create_db_parameter_group = false
+
+  create_db_parameter_group = false
 
   
 }
