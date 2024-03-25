@@ -5,6 +5,28 @@ resource "aws_db_subnet_group" "mariadb-subnets" {
     subnet_ids  = [var.public_subnets[0], var.public_subnets[1]]
 }
 
+
+resource "aws_security_group" "rds_sg" {
+  
+ egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    #security_groups = [aws_security_group.allow-levelup-ssh.id]
+  }
+  
+  tags = {
+    Name = "allow-mariadb"
+  }
+}
+
 #RDS Parameters
 resource "aws_db_parameter_group" "tpr-mariadb-parameters" {
     name        = "tpr-mariadb-parameters"
@@ -14,7 +36,8 @@ resource "aws_db_parameter_group" "tpr-mariadb-parameters" {
     parameter {
       name  = "max_allowed_packet"
       value = "16777216"
-  }
+} 
+   
 }
 
 resource "aws_db_instance"  "tpr-mariadb" {
@@ -57,26 +80,5 @@ resource "aws_db_instance"  "tpr-mariadb" {
   tags = {
     app       = "${var.app}"
     tf_module = "${var.app}-RDS"
-  }
-}
-
-resource "aws_security_group" "rds_sg" {
-  
- egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    #security_groups = [aws_security_group.allow-levelup-ssh.id]
-  }
-  
-  tags = {
-    Name = "allow-mariadb"
   }
 }
