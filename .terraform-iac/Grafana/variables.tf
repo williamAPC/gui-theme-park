@@ -10,20 +10,20 @@ variable "availability_zone" {
   type = string
 }
 
-#variable "all_cidr" {
- # type = string
-#}
-
 variable "public_subnet1_id" {
   type = string
 }
 
-#variable "private_subnet_cidr" {
-#  type = string
-#}
+variable "private_subnet_cidr" {
+  type = string
+}
+
+variable "linux2_ami" {
+  type = string
+}
 
 variable "ssh_port" {
-  type = number
+  type = string
 }
 
 #variable "http_port" {
@@ -35,7 +35,7 @@ variable "ssh_port" {
 #}
 
 variable "grafana_port" {
-  type = number
+  type = string
 }
 
 variable "micro_instance" {
