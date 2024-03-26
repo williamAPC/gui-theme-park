@@ -40,19 +40,19 @@ jobs:
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       working-directory: .terraform-iac/
-      #continue-on-error: true
+      continue-on-error: true
       run: terraform init
 
     
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       working-directory: .terraform-iac/
-      #continue-on-error: true
+      continue-on-error: true
       run: terraform fmt
 
     # Generates an execution plan for Terraform
     - name: Replace Token in k8s manifests
-      #continue-on-error: true
+      continue-on-error: true
       uses: cschleiden/replace-tokens@v1
       with:
         tokenPrefix: '__'
@@ -69,7 +69,7 @@ jobs:
 
     - name: Terraform Plan
       working-directory: .terraform-iac/
-      #continue-on-error: true
+      continue-on-error: true
       env:
         #DBUSERNAME: ${{ vars.DBUSERNAME }}
         #DBPASSWORD: ${{ vars.DBPASSWORD }}
