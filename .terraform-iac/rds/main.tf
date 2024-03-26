@@ -59,11 +59,11 @@ module "rds" {
   username = var.db_username
   password = var.db_password
   port     = 3306
-  db_subnet_group_name   = aws_db_subnet_group.mariadb-subnets.name
+  create_db_subnet_group = true
+  db_subnet_group_name   = "${var.app}_db_subnet_group
   #parameter_group_name    = aws_db_parameter_group.tpr-mariadb-parameters.name
   multi_az             = "false"
   # vpc_security_group_ids = [aws_rds_sg.security_group.name]
-  #create_db_subnet_group = true
   db_subnet_group_use_name_prefix = false
   #vpc_id                   = var.vpc_id
   subnet_ids               = var.private_nets
