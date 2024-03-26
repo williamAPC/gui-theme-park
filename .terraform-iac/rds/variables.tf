@@ -84,6 +84,11 @@ variable "private_subnets" {
  # default     = ["10.0.128.0/18", "10.0.192.0/18"]
 }
 
+variable "subnet_ids" {
+  type        = list(string)
+  description = "Privatesubnets"
+ # default     = ["10.0.128.0/18", "10.0.192.0/18"]
+}
 
 /*
 variable "private_subnets" {
