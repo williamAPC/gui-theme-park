@@ -22,7 +22,7 @@ module "network" {
 
 module "rds" {
   source       = "./rds"
-  subnet_ids   = module.vpc.private_subnets
+  subnet_ids   = module.network.private_subnets
   aws_region   = var.aws_region
   app          = var.app
   vpc_id       = module.network.vpc_id
