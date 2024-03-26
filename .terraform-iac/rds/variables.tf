@@ -87,7 +87,7 @@ variable "private_subnets" {
 variable "subnet_ids" {
   type        = list(string)
   description = "Privatesubnets"
- # default     = ["10.0.128.0/18", "10.0.192.0/18"]
+  default     = ["10.0.128.0/18", "10.0.192.0/18"]
 }
 
 /*

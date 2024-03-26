@@ -2,7 +2,7 @@
 resource "aws_db_subnet_group" "mariadb-subnets" {
     name        = "mariadb-subnets"
     description = "Amazon RDS subnet group"
-    subnet_ids  = var.subnet_ids.*.id
+    subnet_ids  = [var.subnet_ids[0].id, var.subnet_ids[1].id]
 }
 
 resource "aws_security_group" "rds_sg" {
