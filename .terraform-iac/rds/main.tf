@@ -54,7 +54,8 @@ module "rds" {
   engine_version       = var.engine_version
   instance_class       = var.instance_class
   allocated_storage    = var.allocated_storage
-  # identifier           = "mariadb"
+  # identifier         = "mariadb"
+  major_engine_version = var.major_engine_version
   username = var.db_username
   password = var.db_password
   port     = 3306
