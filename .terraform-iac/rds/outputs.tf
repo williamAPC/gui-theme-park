@@ -1,4 +1,4 @@
 output "db_instance_endpoint" {
  description = "RDS endpoint"
- value       = aws_db_instance.tpr-mariadb.endpoint
+ value       = module.rds.db_instance_endpoint
 }
