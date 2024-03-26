@@ -41,7 +41,7 @@ resource "aws_instance" "Grafana"{
     subnet_id = var.public_subnet1_id
     key_name = var.key_name
     vpc_security_group_ids = [aws_security_group.grafana_sg.id]
-    user_data = "${file("grafana_install.sh")}"
+    user_data = file("grafana_install.sh")
     
     tags = {
       Name = "Grafana instance"
