@@ -55,6 +55,7 @@ jobs:
       #continue-on-error: true
       run: terraform fmt
 
+  /**
     # Generates an execution plan for Terraform
     - name: Replace Token in k8s manifests
       #continue-on-error: true
@@ -71,7 +72,7 @@ jobs:
       continue-on-error: true
       run: |
          cat .terraform-iac/*.tf
-
+  **/
     - name: Terraform Plan
       working-directory: .terraform-iac/Grafana
       #continue-on-error: true
