@@ -102,5 +102,5 @@ jobs:
         AWS_DEFAULT_REGION: eu-west-3
       # if: github.ref == 'refs/heads/"master"' && github.event_name == 'push'
       run: |
-           sleep 15m
+           # sleep 15m
            terraform destroy -auto-approve -input=false
