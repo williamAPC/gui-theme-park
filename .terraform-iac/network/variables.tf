@@ -12,7 +12,7 @@ variable "app" {
 
 
 variable "private_subnets1" {
-  type = liststring
+  type = string
 }
 
 variable "private_subnets2" {
