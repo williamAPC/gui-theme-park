@@ -37,7 +37,7 @@ resource "aws_security_group" "grafana_sg"{
 resource "aws_instance" "Grafana"{
     ami = var.ec2_ami
     instance_type = var.micro_instance
-    availability_zone = var.vpc_id
+    availability_zone = var.availability_zone
     subnet_id = var.public_subnet1_id
     key_name = var.key_name
     vpc_security_group_ids = [aws_security_group.grafana_sg.id]

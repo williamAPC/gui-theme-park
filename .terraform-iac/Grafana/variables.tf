@@ -18,21 +18,21 @@ variable "public_subnet1_id" {
   type = string
 }
 
-variable "private_subnet_cidr" {
-  type = string
-}
+#variable "private_subnet_cidr" {
+#  type = string
+#}
 
 variable "ssh_port" {
   type = number
 }
 
-variable "http_port" {
-  type = number
-}
+#variable "http_port" {
+#  type = number
+#}
 
-variable "https_port" {
-  type = number
-}
+#variable "https_port" {
+#  type = number
+#}
 
 variable "grafana_port" {
   type = number
