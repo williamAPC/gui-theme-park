@@ -47,13 +47,13 @@ variable "engine_version" {
   description = "version of database engine"
   default     = "10.4"
 }
-
+/*
 variable "major_engine_version" {
   type        = string
   description = "major engine version"
   default     = "10.4"
 }
-
+*/
 variable "family" {
   type        = string
   description = "family of database engine"
