@@ -1,4 +1,4 @@
-#terraform {
+terraform {
   backend "s3" {
     bucket =  "guitests3bucket"
     key = "grafanastate/terraform.tfstate"
