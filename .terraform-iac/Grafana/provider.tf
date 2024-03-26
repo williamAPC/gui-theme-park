@@ -3,7 +3,7 @@ terraform {
     bucket =  "guitests3bucket"
     key = "grafanastate/terraform.tfstate"
       region can't be set with variables.tf here, should be set with environment variable AWS_REGION
-    region = "eu-west-3"
+    region = var.region
 
   required_providers {
     aws = {
@@ -15,5 +15,5 @@ terraform {
 
 
  provider "aws" {
-  region = "eu-west-3"
+  region = var.region
   }
