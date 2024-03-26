@@ -8,15 +8,15 @@ variable "app" {
   description = "App name"
   default     = "tpr"
 }
-/*
-variable "private_subnets" {
-  type = list(string)
-}*/
 
-/*
+variable "private_nets" {
+  type = list(string)
+}
+
+
 variable "public_subnets" {
   type = list(string)
-}*/
+}
 
 variable "db_name" {
   type = string
@@ -71,7 +71,7 @@ variable "allocated_storage" {
   description = "allocated storage of database engine"
   default     = 5
 }
-
+/*
 variable "public_subnets" {
   type        = list(string)
   description = "Public subnets"
@@ -83,21 +83,10 @@ variable "private_subnets" {
   description = "Privatesubnets"
  # default     = ["10.0.128.0/18", "10.0.192.0/18"]
 }
-/*
+
 variable "subnet_ids" {
   type        = list(string)
   description = "Privatesubnets"
   #default     = ["10.0.128.0/18", "10.0.192.0/18"]
 }
 */
-variable "private_subnets1" {
-  type        = string
-  description = "Private subnets1"
-  default     = "10.0.128.0/18"
-}
-
-variable "private_subnets2" {
-  type        = string
-  description = "Private subnets2"
-  default     = "10.0.192.0/18"
-}
