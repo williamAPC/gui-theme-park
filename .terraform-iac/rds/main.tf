@@ -70,7 +70,7 @@ module "rds" {
   # vpc_security_group_ids = [aws_rds_sg.security_group.name]
   #create_db_subnet_group = true
   db_subnet_group_use_name_prefix = false
-  vpc_id                   = var.vpc_id
+  #vpc_id                   = var.vpc_id
   subnet_ids               = var.private_nets
   #subnet_ids                      = tolist(data.aws_subnet_ids.selected.ids)
   #subnet_ids                       = values(aws_subnet.private)[*].id
