@@ -1,4 +1,9 @@
 
+
+
+
+
+
 resource "aws_db_subnet_group" "mariadb-subnets" {
     name        = "mariadb-subnets"
     description = "Amazon RDS subnet group"
@@ -63,10 +68,12 @@ module "rds" {
   #parameter_group_name    = aws_db_parameter_group.tpr-mariadb-parameters.name
   multi_az             = "false"
   # vpc_security_group_ids = [aws_rds_sg.security_group.name]
-  create_db_subnet_group = true
+  #create_db_subnet_group = true
   db_subnet_group_use_name_prefix = false
+  vpc_id                   = var.vpc_id
+  subnet_ids               = var.private_nets
   #subnet_ids                      = tolist(data.aws_subnet_ids.selected.ids)
-  # subnet_ids                       = values(aws_subnet.private)[*].id
+  #subnet_ids                       = values(aws_subnet.private)[*].id
   #en production, activer la protection contre la suppression
   deletion_protection  = false
   #en production, activer la sauvegarde par snapshot avant la destruction de la BD

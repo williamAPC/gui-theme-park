@@ -11,12 +11,8 @@ variable "app" {
 }
 
 
-variable "private_subnets1" {
-  type = string
-}
-
-variable "private_subnets2" {
-  type = string
+variable "private_subnets" {
+  type = list(string)
 }
 
 variable "public_subnets" {
