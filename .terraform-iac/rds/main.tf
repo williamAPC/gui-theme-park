@@ -1,11 +1,9 @@
 
-/*
 resource "aws_db_subnet_group" "mariadb-subnets" {
     name        = "mariadb-subnets"
     description = "Amazon RDS subnet group"
     subnet_ids  = [module.vpc.private_subnets.ids]
 }
-*/
 
 resource "aws_security_group" "rds_sg" {
   
@@ -60,7 +58,7 @@ module "rds" {
   username = var.db_username
   password = var.db_password
   port     = 3306
-  #db_subnet_group_name   = aws_db_subnet_group.mariadb-subnets.name
+  db_subnet_group_name   = aws_db_subnet_group.mariadb-subnets.name
   #parameter_group_name    = aws_db_parameter_group.tpr-mariadb-parameters.name
   multi_az             = "false"
   # vpc_security_group_ids = [aws_rds_sg.security_group.name]
@@ -71,7 +69,7 @@ module "rds" {
   #en production, activer la protection contre la suppression
   deletion_protection  = false
   #en production, activer la sauvegarde par snapshot avant la destruction de la BD
-  availability_zone   = "eu-west-3a"
+  #availability_zone   = "eu-west-3a"
   skip_final_snapshot = true
   
   storage_encrypted    = false
