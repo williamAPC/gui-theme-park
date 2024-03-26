@@ -16,19 +16,21 @@ module "network" {
   vpc_cidr        = var.vpc_cidr
   app             = var.app
   aws_region      = var.aws_region
-  private_subnets = var.private_subnets
+  private_subnets1 = var.private_subnets1
+  private_subnets2 = var.private_subnets2
   public_subnets  = var.public_subnets
 }
 
 module "rds" {
   source       = "./rds"
-  subnet_ids   = module.network.private_subnets
+  #subnet_ids   = module.network.private_subnets
   aws_region   = var.aws_region
   app          = var.app
   vpc_id       = module.network.vpc_id
   db_name      = var.db_name
   db_username  = var.db_username
   db_password  = var.db_password
-  private_subnets = module.network.private_subnets
+  private_subnets1 = module.network.private_subnets1
+  private_subnets2 = module.network.private_subnets2
   public_subnets  = var.public_subnets
 }
