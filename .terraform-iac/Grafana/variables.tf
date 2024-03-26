@@ -1,4 +1,4 @@
-variable "vpc_cidr" {
+variable "vpc_id" {
   type = string
 }
 
@@ -14,7 +14,7 @@ variable "availability_zone" {
  # type = string
 #}
 
-variable "public_subnet1_cidr" {
+variable "public_subnet1_id" {
   type = string
 }
 

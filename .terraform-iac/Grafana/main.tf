@@ -2,7 +2,7 @@
 resource "aws_security_group" "grafana_sg"{
   name = "Grafana SG"
   description = "Allow ports 3000 and 22"
-  vpc_id = aws_vpc.production_vpc.id
+  vpc_id = var.vpc_id
 
   ingress {
     description = "Grafana"
@@ -37,9 +37,14 @@ resource "aws_security_group" "grafana_sg"{
 resource "aws_instance" "Grafana"{
     ami = var.ec2_ami
     instance_type = var.micro_instance
-    availability_zone = var.availability_zone
-    subnet_id = aws_subnet.public_subnet.subnet_id
+    availability_zone = var.vpc_id
+    subnet_id = var.public_subnet1_id
     key_name = var.key_name
     vpc_security_group_ids = [aws_security_group.grafana_sg.id]
+    user_data = "${file("grafana_install.sh")}"
+    
+    tags = {
+      Name = "Grafana instance"
+  }
 
 }
