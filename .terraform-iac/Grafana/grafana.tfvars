@@ -1,6 +1,6 @@
 vpc_id = "vpc-0e7144b8c2e7dfe0c"
 region = "eu-west-3"
-availability_zone = "eu-west-3a"
+availability_zone = "eu-west-3"
 #all_cidr = "0.0.0.0/0"
 public_subnet1_id = "subnet-05ff3cc0b93ed7594"
 private_subnet_cidr = "10.0.128.0/18"
