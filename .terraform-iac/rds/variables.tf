@@ -63,7 +63,7 @@ variable "family" {
 variable "instance_class" {
   type        = string
   description = "instance class of database engine"
-  default     = "db.t2.micro"
+  default     = "db.t3.micro"
 }
 
 variable "allocated_storage" {
