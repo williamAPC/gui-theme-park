@@ -1,7 +1,7 @@
 vpc_cidr = "10.10.0.0/16"
 region = "eu-west-3"
 availability_zone = "eu-west-3a"
-all_cidr = "0.0.0.0/0"
+#all_cidr = "0.0.0.0/0"
 public_subnet1_cidr = "10.0.0.0/18"
 private_subnet_cidr = "10.0.128.0/18"
 ssh_port = "22"

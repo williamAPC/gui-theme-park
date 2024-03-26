@@ -10,9 +10,9 @@ variable "availability_zone" {
   type = string
 }
 
-variable "all_cidr" {
-  type = string
-}
+#variable "all_cidr" {
+ # type = string
+#}
 
 variable "public_subnet1_cidr" {
   type = string
