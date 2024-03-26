@@ -1,10 +1,10 @@
 terraform {
-  #cloud {
-  #  organization = "GuillaumeHenriOrg"
-  #  workspaces {
-  #     name = "my-demo-test"
-  #  }
-  #}
+  backend "s3" {
+    bucket =  "guitests3bucket"
+    key = "tpriacstate/terraform.tfstate"
+#       region can't be set with variables.tf here, should be set with environment variable AWS_REGION
+    region = "eu-west-3"
+  }
 
   required_providers {
     aws = {

@@ -1,4 +1,4 @@
-name: Manual workflow
+name: Manual workflow for Grafana
 on:
   workflow_dispatch:
     # Inputs the workflow accepts.
@@ -29,3 +29,68 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+
+
+#- name: initialize db password
+    #  run : export TF_VAR_db_password=${{ secrets.DBPASSWORD }}
+  
+    
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      working-directory: .terraform-iac/Grafana/
+      #continue-on-error: true
+      run: terraform init
+
+    
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      working-directory: .terraform-iac/Grafana/
+      #continue-on-error: true
+      run: terraform fmt
+
+    # Generates an execution plan for Terraform
+    - name: Replace Token in k8s manifests
+      #continue-on-error: true
+      uses: cschleiden/replace-tokens@v1
+      with:
+        tokenPrefix: '__'
+        tokenSuffix: '__'
+        files: '["./terraform-iac/Grafana/*.tf"]'
+      env:
+        DBUSERNAME: ${{ vars.DBUSERNAME }}
+        DBPASSWORD: ${{ vars.DBPASSWORD }}
+    
+    - name: check files
+      continue-on-error: true
+      run: |
+         cat .terraform-iac/*.tf
+
+    - name: Terraform Plan
+      working-directory: .terraform-iac/Grafana/
+      #continue-on-error: true
+      env:
+        #DBUSERNAME: ${{ vars.DBUSERNAME }}
+        #DBPASSWORD: ${{ vars.DBPASSWORD }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: eu-west-3
+      run: terraform plan
+      
+
+      # On push to "master", build or change infrastructure according to Terraform configuration files
+      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+    
+
+  
+    - name: Terraform Apply
+      working-directory: .terraform-iac/Grafana/
+      continue-on-error: true
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: eu-west-3
+      # if: github.ref == 'refs/heads/"master"' && github.event_name == 'push'
+      run: terraform apply -auto-approve -input=false
+
+   
