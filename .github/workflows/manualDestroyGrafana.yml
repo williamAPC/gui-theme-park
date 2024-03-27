@@ -40,6 +40,4 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: eu-west-3
-      run: |
-       sleep 15m
-       terraform destroy -auto-approve -input=false
+      run: terraform destroy -auto-approve -input=false
